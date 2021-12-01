@@ -1,0 +1,36 @@
+Class Day02
+
+	'@PredeclaredId
+    '@IgnoreModule
+    '@Folder("Days.Day01")
+    Option Explicit
+
+    Private Const InputData     As String = "Day02.txt"
+
+    Private Type State
+
+        Integers                    As Lyst
+        
+    End Type
+
+    Private s                       As State
+
+    
+    Public Sub New()
+    End Sub
+
+    Public Sub Execute()
+        
+        Part01
+        Part02
+        
+    End Sub
+    
+    Public Sub Part01()
+        
+    End Sub
+
+    Public Sub Part02()
+        
+    End Sub
+End Class

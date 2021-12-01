@@ -5,9 +5,13 @@ Module MainModule
     ' This project type is set to 'Standard EXE' in the Settings file, so you need a Main() subroutine to run when the EXE is started.
     Public Sub Main()
         
+        Dim myTime As Date
+        myTime = Now
+        
         Day01.Execute
+        Day02.Execute
         
-        
+        Debug.Print Format(Now - myTime, "SS")
         
     End Sub
 	

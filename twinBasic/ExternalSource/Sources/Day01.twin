@@ -5,7 +5,7 @@ Class Day01
     '@Folder("Days.Day01")
     Option Explicit
 
-    Private Const InputData         As String = "Day01.txt"
+    Private Const InputData     As String = "Day01.txt"
 
     Private Type State
 
@@ -29,7 +29,7 @@ Class Day01
     Public Sub Part01()
         
         If s.Integers Is Nothing Then
-           
+            
             Set s.Integers = Lyst.Deb.AddRange(Filer.GetFileAsArrayOfStrings(AoC2021Data & InputData, vbCrLf)).Map(mpToLong)
              
             
@@ -43,7 +43,7 @@ Class Day01
                 
          Next
  
-        Fmt.Dbg "The answer to Day 01 part 1 is 1711 .  Found is {0}", myResult
+        Fmt.Dbg "The answer to Day 01 part 1 is 1711 .  Found is ", myResult
         
     End Sub
 
@@ -68,16 +68,17 @@ Class Day01
          Next
          
          ' Now repeat the compare that we did for part 1 using mysums
-         for myindex = 1 to mySums.LastIndex
-            
+        For myIndex = 1 To mySums.LastIndex
+        
             Dim myResult As Long
             If mysums.Item(myIndex) >mysums.Item(myIndex - 1) Then myresult += 1
-                
-         Next
+            
+        Next
  
-        Fmt.Dbg "The answer to Day 01 part 2 is 1743 .  Found is {0}", myResult
+        Fmt.Dbg "The answer to Day 01 part 2 is 1743 .  Found is ", myResult
         
     End Sub
+
 
 
 End Class

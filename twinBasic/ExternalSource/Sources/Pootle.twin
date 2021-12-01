@@ -1,66 +1,11 @@
 Module Pootle
 
-    Public Sub TestDictionaryItem()
-    
-        Dim myD As Scripting.Dictionary
-        Set myD = New Scripting.Dictionary
-        
-        Dim myTest As Object
-        Set myTest = TableArrayToRowLysts
-        
-       ' Debug.Print myTest Is Nothing
-        myD.Add key:="One", item:=TableArrayToRowLysts ' PredeclaredId class
-        
-        
-        Dim myItems As Variant
-        myItems = myD.Items
-        
-        Dim myAction As ITableToLystAction
-        Set myAction = myD.Item("One")
-        
-        Dim myObject As Object
-        Set myObject = myD.Item("One")
-         
-    End Sub
-    
-    Public Sub testArrayListGetRange()
-        
-        Dim mySourceAL As ArrayList
-        Set mySourceAL = New ArrayList
-        
-        mySourceAL.add 10
-        mySourceAL.add 20
-        mySourceAL.add 30
-        mySourceAL.add 40
-        mySourceAL.add 50
-        mySourceAL.add 60
-        mySourceAL.add 70
-        mySourceAL.add 80
-        
-        Dim myTargetAL As ArrayList
-        Set myTargetAL = mySourceAL.getrange(1, 3)
-        
-        Dim myStartRun As Result
-        Ranges.TryStartRunFromAnyStartRunEnd(mySourceAL, myStartRun, 1, 3)
-        
-        
-    End Sub
-    
-        ' add your procedures here
-    
-    Sub TestCollection()
-        
-        Dim myColl As Collection
-        Set myColl = New Collection
-       
-        
-    End Sub
-    
-    Public Sub TestLystCreation()
+	Public Sub TestLystCreation()
         
         Dim myList As Lyst
         Set myList = Lyst.Deb
         
     End Sub
+
 
 End Module
