@@ -1,0 +1,32 @@
+Module Sys
+    'Attribute VB_Name = "Sys"
+'Attribute VB_Description = "A place for useful VBA things not explicitly provided by VBA"
+    
+'@ModuleDescription("A place for useful VBA things not explicitly provided by VBA")
+    Option Explicit
+    '@Folder("VBALib")
+
+
+
+    '@Ignore ConstantNotUsed
+    Public Const MaxLong                    As Long = &H7FFFFFFF
+    Public Const MinLong                    As Long = &HFFFFFFFF
+
+    Public Const NotOkay                     As Boolean = False
+    Public Const Okay                       As boolean = True
+
+
+    Public Const ArrayFirstRank                 As Long = 1
+    Public Const ArrayListFirstIndex            As Long = 0
+    'Arrays supppoert
+    'Public Const ParamArrayIsEmpty          As Long = -1
+
+
+    'TypesIterables Support
+    'Public Const ThisLib                    As String = "VBALib"
+
+    Public Function AsOneItem(ByVal ipIterable As Variant) As Variant
+        AsOneItem = Array(ipIterable)
+    End Function
+
+End Module

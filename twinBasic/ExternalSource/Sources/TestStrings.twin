@@ -1,0 +1,180 @@
+Module TestStrings
+    'Attribute VB_Name = "TestStrings"
+    Option Explicit
+    'Option Private Module
+    '@IgnoreModule
+    '@TestModule
+    '@Folder("Tests")
+
+    ' Private Assert As Object
+    ' Private Fakes As Object
+
+    ' '@ModuleInitialize
+    ' Private Sub ModuleInitialize()
+    '     'this method runs once per module.
+    '     Set Assert = CreateObject("Rubberduck.AssertClass")
+    '     Set Fakes = CreateObject("Rubberduck.FakesProvider")
+    ' End Sub
+
+    ' '@ModuleCleanup
+    ' Private Sub ModuleCleanup()
+    '     'this method runs once per module.
+    '     Set Assert = Nothing
+    '     Set Fakes = Nothing
+    ' End Sub
+
+    ' '@TestInitialize
+    ' Private Sub TestInitialize()
+    '     'This method runs before every test in the module..
+    ' End Sub
+
+    ' '@TestCleanup
+    ' Private Sub TestCleanup()
+    '     'this method runs after every test in the module.
+    ' End Sub
+    '@TestMethod("Primitive")
+
+    Public Sub Stringtests()
+
+        Test01_Dedup
+        Test02_TrimmerDefault
+        T03_TryStringExtentvbNullstring
+        T04_TryStringExtentEmptyString
+        T05_TryStringExtentHelloWOrld
+        
+        Debug.Print "Testing completed for", CurrentComponentName
+        
+    End Sub
+    Private Sub Test01_Dedup()
+            On Error GoTo TestFail
+            
+            'Arrange:
+            Dim myExpected  As String
+            myExpected = "Hello Worlde"
+            
+            
+            Dim myResult As String
+            
+            'Act:
+            myResult = Strings.Dedup("Heeello Worldee", "e")
+
+            'Assert:
+            Assert.Strict.AreEqual myExpected, myResult  ', CurrentProcedureName
+            
+    TestExit:
+            Exit Sub
+            
+    TestFail:
+            Debug.Print "Test raised an error: #" & Err.Number & " - " & Err.Description
+            Resume TestExit
+            
+    End Sub
+
+    Private Sub Test02_TrimmerDefault()
+            On Error GoTo TestFail
+            
+            'Arrange:
+            Dim myExpected  As String
+            myExpected = "Hello World"
+            
+            
+            Dim myResult As String
+            
+            'Act:
+            myResult = Strings.Trimmer("   ;;;,;,;Hello World ;,; ;; ,")
+
+            'Assert:
+            Assert.Strict.AreEqual myExpected, myResult  ', CurrentProcedureName
+            
+    TestExit:
+            Exit Sub
+            
+    TestFail:
+            Debug.Print "Test raised an error: #" & Err.Number & " - " & Err.Description
+            Resume TestExit
+            
+    End Sub
+
+    '@TestMethod("GetStringExtent")
+    Public Sub T03_TryStringExtentvbNullstring()
+
+        On Error GoTo TestFail
+
+        Dim myExpectedStatus As Boolean
+        myExpectedStatus = False
+        
+        Dim myItem As String
+        myItem = vbNullString
+        
+        Dim myResult As Result
+        Dim myResultstatus As Boolean
+        myResultstatus = Types.TryExtent(myItem, myResult)
+        
+        Assert.Strict.AreEqual myExpectedStatus, myResultstatus, CurrentProcedureName
+        
+        Assert.Strict.AreEqual myExpectedStatus, myResultstatus, CurrentProcedureName
+        
+    TestExit:
+        Exit Sub
+        
+    TestFail:
+        Debug.Print "Test raised an error: #" & Err.Number & " - " & Err.Description
+        
+    End Sub
+
+    '@TestMethod("GetStringExtent")
+    Public Sub T04_TryStringExtentEmptyString()
+
+        On Error GoTo TestFail
+
+        Dim myExpectedStatus As Boolean
+        myExpectedStatus = False
+        
+        Dim myItem As String
+        myItem = ""
+        
+        Dim myResult As Result
+        Dim myResultstatus As Boolean
+        myResultstatus = Types.TryExtent(myItem, myResult)
+        
+        Assert.Strict.AreEqual myExpectedStatus, myResultstatus, CurrentProcedureName
+        
+    TestExit:
+        Exit Sub
+        
+    TestFail:
+        Debug.Print "Test raised an error: #" & Err.Number & " - " & Err.Description
+        
+    End Sub
+
+    '@TestMethod("GetStringExtent")
+    Public Sub T05_TryStringExtentHelloWOrld()
+
+        On Error GoTo TestFail
+
+        Dim myExpectedStatus As Boolean
+        myExpectedStatus = True
+        
+        Dim myExpectedItems As Variant
+        myExpectedItems = Array(1, 11, 11)
+        
+        
+        Dim myItem As String
+        myItem = "Hello World"
+        
+        Dim myResult As Result
+        Dim myResultstatus As Boolean
+        myResultstatus = Types.TryExtent(myItem, myResult)
+        
+        Assert.Strict.AreEqual myExpectedStatus, myResultstatus, CurrentProcedureName
+        Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+        
+    TestExit:
+        Exit Sub
+        
+    TestFail:
+        Debug.Print "Test raised an error: #" & Err.Number & " - " & Err.Description
+        
+    End Sub
+
+End Module

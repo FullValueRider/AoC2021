@@ -1,0 +1,33 @@
+Module Testing
+
+	'Attribute VB_Name = "Testing"
+    Option Explicit
+    '@IgnoreModule
+    '@TestModule
+    '@Folder("Tests")
+
+    Public myPlace As string
+
+    Public Sub Tester()
+
+        'Dim assert As AssertClass
+        ' Set Assert = New AssertClass
+        
+        Debug.Print "Testing started"
+            
+        TestStrings.Stringtests
+        TestStringifier.StringifierTests
+        TestFmt.FmtTests
+        TestRanges.RangeTests
+        TestArrays.ArraysTests
+    
+        TestLyst.LystTests
+
+        TestTypes.TypesTests
+        'TestKvp.KvpTests
+        
+        Debug.Print "Testing completed"
+        
+    End Sub
+
+End Module

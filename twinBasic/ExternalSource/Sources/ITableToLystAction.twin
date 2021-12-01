@@ -1,0 +1,18 @@
+Class ITableToLystAction
+    'VERSION1.0 CLASS
+' BEGIN
+'   MultiUse = -1  'True
+' End
+' Attribute VB_Name = "ITableToLystAction"
+' Attribute VB_GlobalNameSpace = False
+' Attribute VB_Creatable = False
+' Attribute VB_PredeclaredId = True
+' Attribute VB_Exposed = True
+Option Explicit
+
+'@Interface
+
+Public Function ExecAction(ByVal ipTablearray As Variant) As Lyst
+End Function
+
+End Interface
