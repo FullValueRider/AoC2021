@@ -2,7 +2,6 @@ Class Day01
 
 	'@PredeclaredId
     '@IgnoreModule
-    '@Folder("Days.Day01")
     Option Explicit
 
     Private Const InputData     As String = "Day01.txt"
@@ -43,7 +42,7 @@ Class Day01
                 
          Next
  
-        Fmt.Dbg "The answer to Day 01 part 1 is 1711 .  Found is ", myResult
+        Debug.Print Fmt.Txt("The answer to Day 01 part 1 is 1711 .  Found is {0}", myResult)
         
     End Sub
 
@@ -75,10 +74,8 @@ Class Day01
             
         Next
  
-        Fmt.Dbg "The answer to Day 01 part 2 is 1743 .  Found is ", myResult
+        Debug.Print Fmt.Txt("The answer to Day 01 part 2 is 1743 .  Found is {0}", myResult)
         
     End Sub
-
-
 
 End Class

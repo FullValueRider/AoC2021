@@ -1,0 +1,111 @@
+Class PointXY
+
+        
+    '@Exposed
+    '@PredeclaredId
+    Option Explicit
+
+    Private Type Properties
+
+        X                       As Variant
+        Y                       As Variant
+        
+    End Type
+
+    Private p As Properties
+    
+    
+    Public Sub New() As PointXY
+        
+        p.X = 0
+        p.Y = 0
+        
+        
+    End Sub
+    
+    Public Sub new(ByVal ipX As Long, ByVal ipY As Long) As PointXY
+
+        With New PointXY
+        
+            Set Deb = .ReadyToUseInstance(CDbl(ipX), CDbl(ipY))
+        
+        End With
+        
+    End Sub
+    
+    Public Function Deb(ByVal ipX As Double, ByVal ipY As Double) As PointXY
+
+        With New PointXY
+        
+            Set Deb = .ReadyToUseInstance(ipX, ipY)
+        
+        End With
+        
+    End Function
+
+    Public Function Deb(ByVal ipCoord As String) As PointXY
+        
+        Set Deb = Deb(CDbl(Split(ipCoord, ",")(0)), CDbl(Split(ipCoord, ",")(1)))
+
+    End Function
+
+    Public Function Deb(ByVal ipArray As Variant) As PointXY
+
+        Set Deb = Deb(CDbl(ipArray(0)), CDbl(ipArray(1)))
+        
+    End Function
+
+
+    Public Function ReadyToUseInstance(ByVal ipX As Double, ByVal ipY As Double) As PointXY
+
+        p.X = ipX
+        p.Y = ipY
+        
+        Set ReadyToUseInstance = Me
+        
+    End Function
+
+
+
+    Public Property Get XD(Of T)() As T
+        XD = p.X
+    End Property
+
+    Public Property Let XD(Of T)(ByVal ipValue As T)
+        p.X = ipValue
+    End Property
+    
+    Public Property Get X() As Long
+        X = CLng(p.X)
+    End Property
+
+    Public Property Let X(ByVal ipValue As Long)
+        p.X = CDbl(ipValue)
+    End Property
+
+    Public Property Get YD() As Long
+        YD = p.Y
+    End Property
+
+    Public Property Let YD(ByVal ipValue As Long)
+        p.YD = ipValue
+    End Property
+    Public Property Get Y() As Long
+        Y = p.Y
+    End Property
+
+    Public Property Let Y(ByVal ipValue As Long)
+        p.Y = ipValue
+    End Property
+
+    '@DefaultMember
+    Public Property Get ToString() As String
+        ToString = Fmt.Txt("{0},{1}", p.X, p.Y)
+    End Property
+
+
+    Public Function Clone() As PointXYStatic
+        Set Clone = DebFromXY(p.X, p.Y)
+    End Function
+
+End Class

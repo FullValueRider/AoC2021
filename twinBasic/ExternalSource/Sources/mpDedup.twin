@@ -1,0 +1,78 @@
+Class mpDedup
+
+	'@Exposed
+'@PredeclaredId
+''@IgnoreModule
+Option Explicit
+
+Private Type State
+
+    Args                    As variant
+    
+End Type
+
+Private s                   As State
+
+Implements IMapper
+
+Private Function IMapper_ExecMapper(ByVal ipHostItem As Variant) As Variant
+    IMapper_ExecMapper = ExecMap(ipHostItem)
+End Function
+
+Public Sub New()
+    s.Args = Array(" ")
+End Sub
+
+Public Function ExecMap(ByVal ipHostItem As Variant) As Variant
+    
+    ExecMap = ipHostItem
+    If VBA.VarType(ipHostItem) <> vbString Then Exit Function
+    
+    Dim myItem As Variant
+    For Each myItem In s.Args
+        
+       Strs.Dedup(ipHostItem, myItem)
+       
+    Next
+   
+    ExecMap = ipHostItem
+    
+End Function
+
+
+Public Function Deb(ParamArray ipArgs() As Variant) As mpDedup
+
+        With New mpDedup
+        
+            Set Deb = .ReadyToUseInstance(ipArgs)
+        
+        End With
+        
+
+End Function
+
+
+Public Function Deb(Optional ByVal ipString As String = " ") As mpDedup
+    
+    With New mpDedup
+    
+        If VBA.Len(ipString) > 0 Then
+            
+            Set Deb = .ReadyToUseInstance(Strs.ToCharLyst(ipString).ToArray)
+        
+            
+        End If
+    
+    End With
+    
+End Function
+
+Friend Function ReadyToUseInstance(ByRef ipargs As Variant) As mpDedup
+    
+    s.Args = ipargs
+    Set ReadyToUseInstance = Me
+    
+    
+End Function
+
+End Class

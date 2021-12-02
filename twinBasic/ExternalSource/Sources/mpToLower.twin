@@ -1,0 +1,49 @@
+Class mpToLower
+
+	'@Exposed
+    '@PredeclaredId
+    
+    Option Explicit
+    
+    Implements IMapper
+    
+    Private Function IMapper_ExecMapper(ByVal ipHostItem As Variant) As Variant
+        IMapper_ExecMapper = ExecMap(ipHostItem)
+    End Function
+    
+    Public Sub New()
+    End Sub
+    
+    Public Function ExecMap(ByVal ipHostItem As Variant) As Variant
+        
+        If VBA.VarType(ipHostItem) <> vbString Then
+            
+            ExecMap = ipHostItem
+         
+        Else
+            
+            ExecMap = VBA.LCase(ipHostItem)
+            
+        End If
+        
+    End Function
+    
+    
+    Public Function Deb() As mpToLower
+    
+            With New mpToLower
+            
+                Set Deb = .ReadyToUseInstance
+            
+            End With
+            
+    
+    End Function
+    
+    Friend Function ReadyToUseInstance() As mpToLower
+        
+        Set ReadyToUseInstance = Me
+        
+    End Function
+
+End Class
