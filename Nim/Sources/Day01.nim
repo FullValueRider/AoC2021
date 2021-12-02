@@ -11,7 +11,7 @@ const InputData = "Day01.txt"
 # In VBA I typically use 3 UDF, 
 # - State(s) for internal state of classes, 
 # - Properties(p) for class properties (acceesed using let/get)
-# - Readonly (r) 'values' I want to make available from within a class as a conmstant
+# - Readonly(r) 'values' I want to make available from within a class as a 'constant'
 
 type
   State = object
