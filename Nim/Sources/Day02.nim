@@ -29,8 +29,8 @@ proc Part01() =
                 myY += myInt
             else:
                 discard
-    var myresult:int=myX*myY
-    echo fmt"The answer to Day 01 part 1 is 1507611 .  Found is {myResult}"
+    var myresult:int=myY*myX
+    echo fmt"The answer to Day 02 part 1 is 1507611 .  Found is {myResult}"
 
 
 proc Part02() =
@@ -53,7 +53,7 @@ proc Part02() =
             else:
                 discard
     var myresult:int =myX*myY
-    echo fmt"The answer to Day 01 part 1 is 1880593125.  Found is {myResult}"
+    echo fmt"The answer to Day 02 part 2 is 1880593125.  Found is {myResult}"
 
 proc Execute*()=
     

@@ -17,12 +17,14 @@ type
   State = object
     Integers: seq[int]
 
-let s =State( Integers:toSeq((RawDataPath & InputData).lines).map(parseInt) )
+let myPath = RawDataPath & InputData
+var s = new State
+s.Integers= toseq(myPath.lines).map(parseInt) 
     
 proc Part01() =
     
     var myResult:int=0
-    for myIndex in 1..<s.Integers.len():  
+    for myIndex in 1..s.Integers.high:  
         if s.Integers[myindex] > s.Integers[myindex-1]:
             myresult+=1
 
@@ -34,7 +36,7 @@ proc Part02() =
     var myResult:int=0
     var mySum:seq[int]
 
-    for myindex in 2..<s.Integers.len():
+    for myindex in 2..s.Integers.high:
         mysum.add  s.Integers[myIndex] + s.Integers[myIndex-1]+s.Integers[myIndex-2]
 
     for myindex in 1..<mySum.len():
