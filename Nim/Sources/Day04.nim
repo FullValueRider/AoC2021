@@ -1,17 +1,16 @@
 import strformat
 import sequtils
 import strutils
-import tables
 
 import Constants
 import Support
 
-const InputData = "Day04Test.txt"
+const InputData = "Day04.txt"
 
 type    
 
     Rank = object
-        Nos:seq[int]  #Items was a bad choise, replaced with Nos
+        Nos:seq[int]  #Items was a bad choise of name, replaced with Nos
         Hits:seq[int]
     
     Board = object
@@ -24,6 +23,7 @@ type
         DrawnNumbers:seq[int]
         BoardsAsNumbers:seq[seq[seq[int]]]
         Boards:seq[Board]
+        BoardNo:int
         Win:bool
         Answer:int
 
@@ -63,71 +63,86 @@ proc MakeBoard(ipBoardNumbers:seq[seq[int]]):Board =
     return myBoard
 
 
-proc DeclareWInner(ipBoard:Board) =
-    for myHrank in ipBoard.HRanks:
+proc DeclareWInner(ipBoardIndex:int) =
+    s.Boardno=ipboardindex
+    s.Answer=0
+    for myHrank in s.Boards[ipBoardIndex].HRanks:
         for myIndex,myHit in myHrank.Hits.pairs:
-            if myHit==1:
+            if myHit==0:
                 s.Answer += myHRank.Nos[myIndex]
 
 
-proc BoardWins(ipBoard: Board):bool =
-    for myHRank in ipBoard.HRanks:
+proc BoardWins(ipBoardIndex: int):bool =
+    for myHRank in s.Boards[ipBoardIndex].HRanks:
         if myHRank.Hits.countit(it>0) == myHRank.Hits.len():
-            DeclareWinner(ipBoard)
+            DeclareWinner(ipBoardIndex)
             return true
     
-    for myVRank in ipBoard.VRanks:
+    for myVRank in s.Boards[ipBoardIndex].VRanks:
         if myVRank.Hits.countit(it>0) == myVRank.Hits.len():
-            DeclareWinner(ipBoard)
+            DeclareWinner(ipBoardIndex)
             return true
 
     return false
 
 
 proc BoardHit(ipBoardIndex:int, ipNumber:int):bool=
-
+    var myHit:bool=false
     if ipNumber notin s.Boards[ipBoardIndex].Numbers:
-        return false
+        return myHit
     
     for myRankIndex in 0..s.Boards[ipBoardIndex].HRanks.high:
 
         if ipNumber in s.Boards[ipBoardIndex].HRanks[myRankIndex].Nos:
             let myHitIndex =s.Boards[ipBoardIndex].HRanks[myRankIndex].Nos.find(ipnumber)
             s.Boards[ipBoardIndex].HRanks[myRankIndex].Hits[myHitIndex] = 1
+            myhit=true
 
         if ipNumber in s.Boards[ipBoardIndex].VRanks[myRankIndex].Nos:
             let myHitIndex =s.Boards[ipBoardIndex].VRanks[myRankIndex].Nos.find(ipnumber)
             s.Boards[ipBoardIndex].VRanks[myRankIndex].Hits[myHitIndex] = 1
+            myhit=true
 
-    return true
+    return myhit
 
 
-proc PlayGame() =
-
+proc PlaySquidBingo() =
     for myNumber in s.DrawnNumbers:
-
         for myBoardIndex in 0..s.Boards.high:
-
             if BoardHit(myBoardIndex,myNumber):
-
-                if BoardWins(s.Boards[myBoardIndex]):
+                if BoardWins(myBoardIndex):
                     s.Answer = s.Answer * myNumber
                     return
+
+proc FindLastWinner()=
+    var myBoardsInPlay:seq[int]=toseq(0..s.Boards.high)
+    for myNumber in s.DrawnNumbers:
+        for myBoardIndex in 0..s.Boards.high:
+            if myBoardIndex in myBoardsInPlay:
+                if BoardHit(myBoardIndex,myNumber):
+                    if BoardWins(myBoardIndex):
+                        if myBoardsinplay.len()==1:
+                            s.Answer = s.Answer * myNumber
+                            return
+                        else:
+                            myBoardsinplay.delete(myBoardsinplay.find(myBoardIndex))
+
+
 
 
 proc Part01() =
     
-    PlayGame()
+    PlaySquidBingo()
     #echo fmt"The answer to Day 04 part 1 is xxxxxxx .  Found is {s.Answer}."
-    echo fmt"The answer to Day 04 part 1 is xxxxxxx .  Found is. {s.Answer}" 
+    echo fmt"The answer to Day 04 part 1 is 45031. Found {s.Answer}" 
 
 
-# proc Part02() =
+proc Part02() =
    
-#     var myResult:int
-#     echo fmt"The answer to Day 04 Part 1 is xxxxxxx. Found {myResult}"
+    FindLastWinner()
+    echo fmt"The answer to Day 04 Part 2 is 2568. Found {s.Answer}"
 
 proc Execute*()=
     
     Part01()
-    #Part02()
+    Part02()
