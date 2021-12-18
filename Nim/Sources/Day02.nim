@@ -1,7 +1,7 @@
 import strutils
 import strformat
 import sequtils
-import Constants
+import AoCLib
 
 const InputData = "Day02.txt"
 
@@ -10,7 +10,7 @@ type
     Data: seq[seq[string]]
 
 let s =new State
-s.Data = toSeq((RawDataPath & InputData).lines).mapIt(it.multiReplace(("  "," "))).mapIt(it.split(' '))
+s.Data = toSeq((RawDataPath2021 & InputData).lines).mapIt(it.multiReplace(("  "," "))).mapIt(it.split(' '))
 
 proc Part01() =
 

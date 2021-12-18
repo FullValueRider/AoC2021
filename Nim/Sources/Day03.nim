@@ -1,8 +1,7 @@
 import strformat
 import sequtils
-
-import Constants
-import Support
+import parseutils
+import AoCLib
 
 const InputData = "Day03.txt"
 
@@ -10,7 +9,7 @@ type
   State =tuple[ Data: seq[seq[char]], Transposed :seq[seq[char]]]
 
 let s = new State
-s.Data = toSeq((RawDataPath & InputData).lines).mapit(it.toseq())
+s.Data = toSeq((RawDataPath2021 & InputData).lines).mapit(it.toseq())
 s.Transposed = s.Data.Transpose()
 
 proc Part01() =
@@ -29,7 +28,10 @@ proc Part01() =
             myGamma &= "0"
             myEpsilon &= "1"
     
-    let myResult:int=BinStrtoInt(myGamma) * BinStrToInt(myEpsilon)
+    var mygammaint, myepsilonint:int
+    discard parseBin(myGamma,mygammaint) 
+    discard parsebin(myEpsilon,myepsilonint)
+    let myResult:int=mygammaint * myepsilonint
     echo fmt"The answer to Day 03 part 1 is 845186 .  Found is {myResult}"
 
 #In part 2, the bit criteria is calculated and then the readings seq is filered and the transposed array
@@ -79,7 +81,12 @@ proc Part02() =
             break
         s.Transposed=myReadings.Transpose
 
-    var myResult:int=BinStrToInt(myLastOxygen) * BinStrToInt(myLastCO2)
+    var mylastoxygenint, mylastco2int:int
+    discard parseBin($mylastoxygen,mylastoxygenint) 
+    discard parsebin($mylastco2,mylastco2int)
+    let myResult:int=mylastoxygenint * mylastco2int
+
+    #var myResult:int=BinStrToInt(myLastOxygen) * BinStrToInt(myLastCO2)
     echo fmt"The answer to Day 03 Part 2 is 4636702. Found {myResult}"
 
 proc Execute*()=

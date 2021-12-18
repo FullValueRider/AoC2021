@@ -1,7 +1,7 @@
 import strutils
 import strformat
 import sequtils
-import Constants
+import AoCLib
 
 const InputData = "Day01.txt"
 
@@ -17,7 +17,7 @@ type
   State = object
     Integers: seq[int]
 
-let myPath = RawDataPath & InputData
+let myPath = RawDataPath2021 & InputData
 var s = new State
 s.Integers= toseq(myPath.lines).map(parseInt) 
     

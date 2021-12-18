@@ -2,8 +2,7 @@ import strformat
 import sequtils
 import strutils
 
-import Constants
-import Support
+import AoCLib
 
 const InputData = "Day04.txt"
 
@@ -32,7 +31,7 @@ proc MakeBoard(ipBoardNumbers:seq[seq[int]]):Board
 
 #Initialisation        
 var s : State
-s.Data = readfile(RawDataPath & InputData).multireplace(("  "," ")).split("\r\n\r\n",1)
+s.Data = readfile(RawDataPath2021 & InputData).multireplace(("  "," ")).split("\r\n\r\n",1)
 #echo fmt" Data {s.Data}"
 
 s.DrawnNumbers=s.Data[0].split(",").toseq().map(parseint)
