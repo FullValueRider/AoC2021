@@ -1,7 +1,6 @@
 import strformat
 import sequtils
 import strutils
-#import tables 
 import AoCLib
 
 const InputData = "Day06.txt"
@@ -46,6 +45,7 @@ proc Execute*() =
     # proc Part01() =
 #   # This brute force approach works for 80 days
 #   # it also works for 256 days but runs out of memory
+# before it completes
 #   var mySum: int
 #   for myItem in s.Data:
 

@@ -2,15 +2,16 @@
 Module MainModule
 
     Public Const AoC2021Data As string = "C:\Users\slayc\source\repos\AoC2021\RawData\"
-    ' This project type is set to 'Standard EXE' in the Settings file, so you need a Main() subroutine to run when the EXE is started.
+   
     Public Sub Main()
-        
-        ' Time is more accurately displayed by Using F5 to run the program
         
         Day01.Execute
         Day02.Execute
         Day03.Execute
-        
+        Day04.Execute
+        Day05.Execute
+        Day06.Execute
+        Day07.Execute
     End Sub
 	
 End Module
