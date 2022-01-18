@@ -34,7 +34,7 @@ proc Part02() =
   var mycost: int = 2^31
   for myAlignAt in countdown( myAverage, 0 ):
     var myDist: seq[int] = s.Data.mapIt(it - myAlignAt).mapit(int(abs(it)*(abs(it)+1) / 2))  
-    var mySumDist:int = myDist.filterIt(it >= 0).foldr( a + b )
+    var mySumDist:int = myDist.foldr( a + b )   #.filterIt(it >= 0)
     if mycost < mysumDist:
       break
     mycost = mysumDist

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "5de6bd80-c118-4614-9acc-66f45a46d26a": {
+      "ProjectGuid": "5de6bd80-c118-4614-9acc-66f45a46d26a",
+      "DisplayName": "AoC2021CSharp",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

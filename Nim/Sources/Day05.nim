@@ -9,9 +9,9 @@ const InputData = "Day05Test.txt"
 type
 
   State = object
-    Data:seq[seq[int]]
+    Ventlines: VentCoords
 
-#Seq use 0 based indexing whereas the Lyst class used 1 based indexing.
+#Seq use 0 base d indexing whereas the Lyst class used 1 based indexing.
 const myPoints : int = 0
 const myHLines : int = 1
 const myVLines : int = 2
@@ -23,12 +23,12 @@ const myY1 : int = 1
 const myY2 : int = 3
 
 
-var s : State
-s.Data=readfile(RawDataPath2021 & InputData).split("\r\n").mapit(it.multireplace((" " ,""),("->",",")).split(",").mapit(it.parseint))
+var s: State = State()
+
 
 
 proc CheckCoords(iprun:  seq[int],ipCoords:var Table[string,int]) =
-  echo fmt"{ipRun}"
+  #echo fmt"{ipRun}"
   var 
     mysingleXStep, mySingleYStep:int
     myx, myy :int
@@ -64,7 +64,7 @@ proc CheckCoords(iprun:  seq[int],ipCoords:var Table[string,int]) =
   while true:
     
     var myCoord = $myx & "," & $myy
-    echo fmt"{myCoord}"
+    #echo fmt"{myCoord}"
     if myCoord in ipCoords:
       
       ipCoords[myCoord] += 1
@@ -124,15 +124,21 @@ proc FilterRuns( ipRuns:var seq[seq[int]]) :  seq[seq[seq[int]]] =
     mylyst[getlinetype(myrun)].add myRun
     
   return myLyst
-  
+
+
+proc Initialise() =
+    s.Ventlines = 
+        readfile(RawDataPath2021 & InputData).split("\r\n").mapit(it.multireplace((" ", ""),("->", ",")))  #.mapit(VentCoords(it)))
+
 
 proc Part01() =
-  var myLines = FilterRuns(s.Data)
-  var myVentLocations = CalculateVentLocations(myLines, @[myPoints, myHLines, myVLines])
-  echo fmt"{myventlocations}"
-  var myResult = myVentLocations.values.toseq.countIt(it>1)
+    Initialise()
+    var myLines = FilterRuns(s.Ventlines)
+    var myVentLocations = CalculateVentLocations(myLines, @[myPoints, myHLines, myVLines])
+    #echo fmt"{myventlocations}"
+    var myResult = myVentLocations.values.toseq.countIt(it>1)
 
-  echo fmt"The answer to Day 05 part 1 is 7085.  Found is {myresult}"
+    echo fmt"The answer to Day 05 part 1 is 7085.  Found is {myresult}"
     
 
 proc Part02() =

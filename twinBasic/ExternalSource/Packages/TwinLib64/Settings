@@ -1,0 +1,61 @@
+{
+	"project.references": [
+		{
+			"id": "{00020430-0000-0000-C000-000000000046}",
+			"name": "OLE Automation",
+			"versionMajor": 2,
+			"versionMinor": 0,
+			"lcid": 0,
+			"path32": "C:\\Windows\\SysWOW64\\stdole2.tlb",
+			"path64": "C:\\Windows\\System32\\stdole2.tlb"
+		},
+		{
+			"id": "{9847A10D-8987-44B2-8B87-EA77DEF7F1D9}",
+			"name": "[twinBASIC Extension] Unit Testing Assertion Library",
+			"lcid": 0,
+			"versionMajor": 1,
+			"versionMinor": 0
+		},
+		{
+			"id": "{BED7F4EA-1A96-11D2-8F08-00A0C9A6186D}",
+			"name": "mscorlib.dll",
+			"versionMajor": 2,
+			"versionMinor": 4,
+			"lcid": 0,
+			"path32": "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\mscorlib.tlb",
+			"path64": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\mscorlib.tlb"
+		},
+		{
+			"id": "{420B2830-E718-11CF-893D-00A0C9054228}",
+			"name": "Microsoft Scripting Runtime",
+			"versionMajor": 1,
+			"versionMinor": 0,
+			"lcid": 0,
+			"path32": "C:\\Windows\\SysWOW64\\scrrun.dll",
+			"path64": "C:\\Windows\\System32\\scrrun.dll"
+		}
+	],
+	"project.name": "TwinLib64",
+	"project.description": "TwinLib64",
+	"project.id": "{B768C096-6072-450A-84A8-01D07F690907}",
+	"configuration.inherits": "Defaults",
+	"project.buildType": "Package TWINPACK",
+	"project.buildPath": "${SourcePath}\\Build\\${ProjectName}_${Architecture}.${FileExtension}",
+	"project.optionExplicit": true,
+	"project.warnings": {
+		"ignored": [],
+		"errors": []
+	},
+	"project.codeLensRunProcedure": true,
+	"compiler.symbolTableMaxSizeRaw": 2097152,
+	"compiler.symbolTableMaxSizeHash": 524288,
+	"project.largeAddressAware": true,
+	"project.depAware": true,
+	"project.autoPrettify": true,
+	"project.versionMajor": 0,
+	"project.versionMinor": 1,
+	"project.versionBuild": 7,
+	"project.licence": "MIT",
+	"project.versionRevision": 2,
+	"project.packageVisibility": "PUBLIC"
+}

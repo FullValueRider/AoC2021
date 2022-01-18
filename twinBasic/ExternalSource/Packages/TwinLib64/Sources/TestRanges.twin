@@ -1,0 +1,3098 @@
+Module TestRanges
+   
+    Option Explicit
+'Option Private Module
+''@IgnoreModule
+'@TestModule
+'@Folder("Tests")
+
+
+
+' Private Assert As Object
+' Private Fakes As Object
+
+' '@ModuleInitialize
+' Private Sub ModuleInitialize()
+'     'this method runs once per module.
+'     Set Assert = CreateObject("Rubberduck.AssertClass")
+'     Set Fakes = CreateObject("Rubberduck.FakesProvmsg.r")
+' End Sub
+
+' '@ModuleCleanup
+' Private Sub ModuleCleanup()
+'     'this method runs once per module.
+'     Set Assert = Nothing
+'     Set Fakes = Nothing
+' End Sub
+
+' '@TestInitialize
+' Private Sub TestInitialize()
+'     'This method runs before every test in the module..
+' End Sub
+
+' '@TestCleanup
+' Private Sub TestCleanup()
+'     'this method runs after every test in the module.
+' End Sub
+
+Public Sub RangeTests()
+    
+    Debug.Print "Testing ", CurrentProcedureName vbTab, vbTab,
+    T01_GetSeriesStart1Count10DefaultStep
+    T02_GetSeriesStart1Count10StepIs2
+    T03_GetSeriesDoubleStart1Count10StepIs1Point1
+    T04_GetConstSeriesFiveItemsOfTen
+   
+    T010_TryStartRunForPrimitive
+    
+    T011a_TryStartRunForStringvbNullString_False
+    T011b_TryStartRunForStringEmpty_False
+    T011c_TryStartRunForString11Chars_True_1_11
+    T011d_TryStartRunForString11CharsRank2_False
+    T011e_TryStartRunForString11CharsStartLessThanCount_True_4_8
+    T011f_TryStartRunForString11CharsAbsMinusStartLessThanCount_True_8_4
+    T011g_TryStartRunForString11CharsStartMoreThanCount_False
+    T011h_TryStartRunForString11CharsAbsMinusStartMoreThanCount_False
+    T011i_TryStartRunForString11CharsStartIsZero_True_1_11
+    T011j_TryStartRunForString11CharsStart5Run5_True_5_5
+    T011k_TryStartRunForString11CharsStart5RunMinus5_True_1_5
+    T011l_TryStartRunForString11CharsStartMinus6Run5_True_6_5
+    T011m_TryStartRunForString11CharsStartMinus6RunMinus5_True_2_5
+    T011n_TryStartRunForString11CharsStartMinus6RunMinus5EndMinus3_True_2_5_EndIgnored
+    T011o_TryStartRunForString11CharsStart6End9_True_6_4
+    T011p_TryStartRunForString11CharsStart6End3_True_3_4
+    T011q_TryStartRunForString11CharsStartMinus6End3_True_3_4
+    T011r_TryStartRunForString11CharsStartMinus6EndMinus3_True_6_4
+    T011s_TryStartRunForString11CharsStartMinus6EndMinus9_True_3_4
+    T011t_TryStartRunForString11CharsEnd5_True_1_5
+    T011u_TryStartRunForString11CharsEndMinus5_True_1_7
+    T011v_TryStartRunForString11CharsRun5_True_1_5
+    T011w_TryStartRunForString11CharsRunMinus5_True_7_5
+    
+    T012a_TryStartRunForArray16ItemsUninitialised_False
+    ' T012b_TryStartRunForArrayEmpty_False
+    T012c_TryStartRunForArray16Items_True_Minus5_16
+    T012d_TryStartRunForArray16ItemsRank2_False
+    T012e_TryStartRunForArray16ItemsStart4_True_Minus2_13
+    T012f_TryStartRunForArray16ItemsStartMinus4_True_7_4
+    T012g_TryStartRunForArray16ItemsStar20_False
+    T012h_TryStartRunForArray16ItemStartAbsMinus20_False
+    T012i_TryStartRunForArray16IttemsStartIsZero_True_Minus5_16
+    T012j_TryStartRunForArray16ItemsStart5Run5_True_Minus1_5
+    T012k_TryStartRunForArray16CharsStart5RunMinus5_True_Minus5_5
+    T012l_TryStartRunForArray16ItemsStartMinus6Run5_True_6_5
+    T012m_TryStartRunForArray11CharsStartMinus6RunMinus5_True_2_5
+    T012n_TryStartRunForArray16ItemsStartMinus6RunMinus5EndMinus3_True_1_5_EndIgnored
+    T012o_TryStartRunForArray16ItemsStart6End9_True_6_4
+    T012p_TryStartRunForArray16ItemsStart6End3_True_Minus3_4
+    T012q_TryStartRunForArray16ItemsStartMinus6End3_True_Minus3_9
+    T012r_TryStartRunForArray16ItemsStartMinus6EndMinus3_True_5_4
+    T012s_TryStartRunForArray16ItemsStartMinus6EndMinus9_True_2_4
+    T012t_TryStartRunForArray16ItemsEnd5_True_MInus5_Minus1
+    T012u_TryStartRunForArray16ItemsEndMinus5_True_Minus5_12
+    T012v_TryStartRunForArray16ItemsRun5_True_Minus5_5
+    T012w_TryStartRunForArray11CharsRunMinus5_True_6_5
+    
+    T013a_TryStartRunForCollection16ItemsUninitialised_False
+    T013b_TryStartRunForCollectionNew_False
+    T013c_TryStartRunForCollection16Items_True_1_16
+    T013d_TryStartRunForCollection16ItemsRank2_False
+    T013e_TryStartRunForCollection16ItemsStartLessThanCount_True_4_13
+    T013f_TryStartRunForCollection16ItemsStartMinus4_True_13_4
+    T013g_TryStartRunForCollection16ItemsStar20_False
+    T013h_TryStartRunForCollection16ItemStartAbsMinus20_False
+    T013i_TryStartRunForCollection16IttemsStartIsZero_True_1_16
+    T013j_TryStartRunForCollection16ItemsStart5Run5_True_5_5
+    T013k_TryStartRunForCollection16CharsStart5RunMinus5_True_1_5
+    T013l_TryStartRunForCollection16ItemsStartMinus6Run5_True_11_5
+    T013m_TryStartRunForCollection11CharsStartMinus6RunMinus5_True_7_5
+    T013n_TryStartRunForCollection16ItemsStartMinus6RunMinus5EndMinus3_True_7_5_EndIgnored
+    T013o_TryStartRunForCollection16ItemsStart6End9_True_6_4
+    T013p_TryStartRunForCollection16ItemsStart6End3_True_3_4
+    T013q_TryStartRunForCollection16ItemsStartMinus6End3_True_3_9
+    T013r_TryStartRunForCollection16ItemsStartMinus6EndMinus3_True_11_4
+    T013s_TryStartRunForCollection16ItemsStartMinus6EndMinus9_True_8_4
+    T013t_TryStartRunForCollection16ItemsEnd5_True_1_5
+    T013u_TryStartRunForCollection16ItemsEndMinus5_True_1_12
+    T013v_TryStartRunForCollection16ItemsRun5_True_1_5
+    T013w_TryStartRunForCollection11CharsRunMinus5_True_12_5
+    
+    
+    T014a_TryStartRunForLyst16ItemsUninitialised_False
+    T014b_TryStartRunForLystNew_False
+    T014c_TryStartRunForLyst16Items_True_0_16
+    T014d_TryStartRunForLyst16ItemsRank2_False
+    T014e_TryStartRunForLyst16ItemsStart4_True_4_13
+    T014f_TryStartRunForLyst16ItemsStartMinus4_True_13_4
+    T014g_TryStartRunForLyst16ItemsStart20_False
+    T014h_TryStartRunForLyst16ItemStartMinus20_False
+    T014i_TryStartRunForLyst16IttemsStartIsZero_True_0_16
+    T014j_TryStartRunForLyst16ItemsStart5Run5_True_4_5
+    T014k_TryStartRunForLyst16CharsStart5RunMinus5_True_0_5
+    T014l_TryStartRunForLyst16ItemsStartMinus6Run5_True_10_5
+    T014m_TryStartRunForLyst11CharsStartMinus6RunMinus5_True_6_5
+    T014n_TryStartRunForLyst16ItemsStartMinus6RunMinus5EndMinus3_True_6_5_EndIgnored
+    T014o_TryStartRunForLyst16ItemsStart6End9_True_5_4
+    T014p_TryStartRunForLyst16ItemsStart6End3_True_2_4
+    T014q_TryStartRunForLyst16ItemsStartMinus6End3_True_2_9
+    T014r_TryStartRunForLyst16ItemsStartMinus6EndMinus3_True_10_4
+    T014s_TryStartRunForLyst16ItemsStartMinus6EndMinus9_True_7_4
+    T014t_TryStartRunForLyst16ItemsEnd5_True_0_5
+    T014u_TryStartRunForLyst16ItemsEndMinus5_True_0_12
+    T014v_TryStartRunForLyst16ItemsRun5_True_0_5
+    T014w_TryStartRunForLyst11CharsRunMinus5_True_11_5
+    
+    
+    Debug.Print "Testing completed"
+    
+End Sub
+
+'@TestMethod("GetSeries")
+Public Sub T01_GetSeriesStart1Count10DefaultStep()
+
+    On Error GoTo TestFail
+
+    Dim myExpected As Variant
+    myExpected = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    
+    Dim myResult As Lyst
+    Set myResult = Ranges.GetSeries(1, 10)
+    
+    Assert.Strict.SequenceEquals myExpected, myResult.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("GetSeries")
+Public Sub T02_GetSeriesStart1Count10StepIs2()
+
+    On Error GoTo TestFail
+
+    Dim myExpected As Variant
+    myExpected = Array(1, 3, 5, 7, 9, 11, 13, 15, 17, 19)
+    
+    Dim myResult As Lyst
+    Set myResult = Ranges.GetSeries(1, 10, 2)
+    
+    Assert.Strict.SequenceEquals myExpected, myResult.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("GetSeries")
+Public Sub T03_GetSeriesDoubleStart1Count10StepIs1Point1()
+
+    On Error GoTo TestFail
+
+    Dim myExpected As Lyst
+    Set myExpected = Lyst.Deb.Add(1.0#, 2.1#, 3.2#, 4.3#, 5.4#, 6.5#, 7.6#, 8.7#, 9.8#, 10.9#)
+    
+    Dim myResult As Lyst
+    Set myResult = Ranges.GetSeries(1.0#, 10, 1.1#)
+    ' Cannot compare arrays of floats so compare by emitting as strings
+    'Debug.Print myExpected.ToString(Char.twComma), myResult.ToString(Char.twComma)
+    Assert.Strict.AreEqual myExpected.ToString(Char.twComma), myResult.ToString(Char.twComma), CurrentProcedureName
+    'Assert.Permissive.SequenceEquals myExpected.ToArray, myResult.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("GetConstSeries")
+Public Sub T04_GetConstSeriesFiveItemsOfTen()
+
+    On Error GoTo TestFail
+
+    Dim myExpected As Lyst
+    Set myExpected = Lyst.Deb.Add(10, 10, 10, 10, 10)
+    
+    Dim myResult As Lyst
+    Set myResult = Ranges.GetConstSeries(5, 10)
+    
+    Assert.Strict.SequenceEquals myExpected.ToArray, myResult.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+#Region "TryStartRun"
+
+#Region "Primitive"
+
+'@TestMethod("TryStartRun")
+Public Sub T010_TryStartRunForPrimitive()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As eMessage.Msg
+    myExpectedMessage = enums.Message.AsEnum(Msg.IsNotIterable)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(42, 1, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+  '  Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+#End Region
+
+#Region "String"
+
+'@TestMethod("TryStartRun")
+Public Sub T011a_TryStartRunForStringvbNullString_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(vbNullString)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011b_TryStartRunForStringEmpty_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("")
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011c_TryStartRunForString11Chars_True_1_11()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 11)
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World")
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011d_TryStartRunForString11CharsRank2_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Msg
+    myExpectedMessage = enums.Message.AsEnum(Msg.ItemDoesNotSupportRanks)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", iprank:=2)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011e_TryStartRunForString11CharsStartLessThanCount_True_4_8()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(4, 8)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", 4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011f_TryStartRunForString11CharsAbsMinusStartLessThanCount_True_8_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(8, 4)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011g_TryStartRunForString11CharsStartMoreThanCount_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", 15)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011h_TryStartRunForString11CharsAbsMinusStartMoreThanCount_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -15)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011i_TryStartRunForString11CharsStartIsZero_True_1_11()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 11)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", 0)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011j_TryStartRunForString11CharsStart5Run5_True_5_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(5, 5)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", 5, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011k_TryStartRunForString11CharsStart5RunMinus5_True_1_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", 5, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011l_TryStartRunForString11CharsStartMinus6Run5_True_6_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(6, 5)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -6, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011m_TryStartRunForString11CharsStartMinus6RunMinus5_True_2_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(2, 5)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -6, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T011n_TryStartRunForString11CharsStartMinus6RunMinus5EndMinus3_True_2_5_EndIgnored()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(2, 5)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -6, -5, -3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T011o_TryStartRunForString11CharsStart6End9_True_6_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(6, 4)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", 6, ipeNDiNDEX:=9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T011p_TryStartRunForString11CharsStart6End3_True_3_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(3, 4)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", 6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011q_TryStartRunForString11CharsStartMinus6End3_True_3_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(3, 4)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011r_TryStartRunForString11CharsStartMinus6EndMinus3_True_6_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(6, 4)
+    
+    Dim myResult As Result
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -6, ipeNDiNDEX:=-3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011s_TryStartRunForString11CharsStartMinus6EndMinus9_True_3_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(3, 4)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -6, ipeNDiNDEX:=-9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011t_TryStartRunForString11CharsEnd5_True_1_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", ipeNDiNDEX:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011u_TryStartRunForString11CharsEndMinus5_True_1_7()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 7)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", ipeNDiNDEX:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T011v_TryStartRunForString11CharsRun5_True_1_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", ipRun:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T011w_TryStartRunForString11CharsRunMinus5_True_7_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(7, 5)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", ipRun:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+#End Region
+
+
+
+#Region "Array"
+
+'@TestMethod("TryStartRun")
+Public Sub T012a_TryStartRunForArray16ItemsUninitialised_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myItem() As Variant
+    'ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+' '@TestMethod("TryStartRun")
+' Public Sub T012b_TryStartRunForArrayEmpty_False()
+
+'     On Error GoTo TestFail
+
+'     Dim myExpectedStatus As Boolean
+'     myExpectedStatus = False
+    
+'     Dim myItem() As Variant
+'     ReDim myItem(-5 To 10)
+    
+'     Dim myResult As Result
+'     
+'     set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, )
+    
+'     Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+' TestExit:
+'     Exit Sub
+    
+' TestFail:
+'     Debug.Print currentprocedurename, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+' End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012c_TryStartRunForArray16Items_True_Minus5_16()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 16)
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012d_TryStartRunForArray16ItemsRank2_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.ArrayLacksRank)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRank:=2)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012e_TryStartRunForArray16ItemsStart4_True_Minus2_13()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-2, 13)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012f_TryStartRunForArray16ItemsStartMinus4_True_7_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(7, 4)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012g_TryStartRunForArray16ItemsStar20_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 13)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 20)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012h_TryStartRunForArray16ItemStartAbsMinus20_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -20)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012i_TryStartRunForArray16IttemsStartIsZero_True_Minus5_16()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 0)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+   ' Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012j_TryStartRunForArray16ItemsStart5Run5_True_Minus1_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-1, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 5, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012k_TryStartRunForArray16CharsStart5RunMinus5_True_Minus5_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 5, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012l_TryStartRunForArray16ItemsStartMinus6Run5_True_6_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(5, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012m_TryStartRunForArray11CharsStartMinus6RunMinus5_True_2_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T012n_TryStartRunForArray16ItemsStartMinus6RunMinus5EndMinus3_True_1_5_EndIgnored()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, -5, -3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T012o_TryStartRunForArray16ItemsStart6End9_True_6_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(0, 4)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 6, ipEndIndex:=9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T012p_TryStartRunForArray16ItemsStart6End3_True_Minus3_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-3, 4)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012q_TryStartRunForArray16ItemsStartMinus6End3_True_Minus3_9()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-3, 9)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012r_TryStartRunForArray16ItemsStartMinus6EndMinus3_True_5_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(5, 4)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=-3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012s_TryStartRunForArray16ItemsStartMinus6EndMinus9_True_2_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(2, 4)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=-9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012t_TryStartRunForArray16ItemsEnd5_True_MInus5_Minus1()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipeNDiNDEX:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012u_TryStartRunForArray16ItemsEndMinus5_True_Minus5_12()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 12)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipeNDiNDEX:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T012v_TryStartRunForArray16ItemsRun5_True_Minus5_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRun:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T012w_TryStartRunForArray11CharsRunMinus5_True_6_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(6, 5)
+    
+    Dim myItem() As Variant
+    ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRun:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+#End Region
+
+#Region "Collection"
+
+'@TestMethod("TryStartRun")
+Public Sub T013a_TryStartRunForCollection16ItemsUninitialised_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myItem As Collection
+    'ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013b_TryStartRunForCollectionNew_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myItem As Collection
+    Set myItem = New Collection
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013c_TryStartRunForCollection16Items_True_1_16()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160)
+    
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 16)
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013d_TryStartRunForCollection16ItemsRank2_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.ItemDoesNotSupportRanks)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRank:=2)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013e_TryStartRunForCollection16ItemsStartLessThanCount_True_4_13()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(4, 13)
+    
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013f_TryStartRunForCollection16ItemsStartMinus4_True_13_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(13, 4)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013g_TryStartRunForCollection16ItemsStar20_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 13)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 20)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013h_TryStartRunForCollection16ItemStartAbsMinus20_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -20)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013i_TryStartRunForCollection16IttemsStartIsZero_True_1_16()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+        
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 0)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013j_TryStartRunForCollection16ItemsStart5Run5_True_5_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(5, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 5, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013k_TryStartRunForCollection16CharsStart5RunMinus5_True_1_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 5, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013l_TryStartRunForCollection16ItemsStartMinus6Run5_True_11_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(11, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+        
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013m_TryStartRunForCollection11CharsStartMinus6RunMinus5_True_7_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(7, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T013n_TryStartRunForCollection16ItemsStartMinus6RunMinus5EndMinus3_True_7_5_EndIgnored()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(7, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, -5, -3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T013o_TryStartRunForCollection16ItemsStart6End9_True_6_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(6, 4)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 6, ipEndIndex:=9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T013p_TryStartRunForCollection16ItemsStart6End3_True_3_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(3, 4)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013q_TryStartRunForCollection16ItemsStartMinus6End3_True_3_9()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(3, 9)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013r_TryStartRunForCollection16ItemsStartMinus6EndMinus3_True_11_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(11, 4)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=-3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013s_TryStartRunForCollection16ItemsStartMinus6EndMinus9_True_8_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(8, 4)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=-9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013t_TryStartRunForCollection16ItemsEnd5_True_1_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipeNDiNDEX:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013u_TryStartRunForCollection16ItemsEndMinus5_True_1_12()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 12)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipeNDiNDEX:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T013v_TryStartRunForCollection16ItemsRun5_True_1_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRun:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T013w_TryStartRunForCollection11CharsRunMinus5_True_12_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(12, 5)
+    
+    Dim myItem As Collection
+    Set myItem = Types.Iterable.ToCollection(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRun:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+#End Region
+
+#Region "Lyst"
+
+'@TestMethod("TryStartRun")
+Public Sub T014a_TryStartRunForLyst16ItemsUninitialised_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myItem As Lyst
+    'ReDim myItem(-5 To 10)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014b_TryStartRunForLystNew_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myItem As Lyst
+    Set myItem = Lyst.Deb
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014c_TryStartRunForLyst16Items_True_0_16()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 16)
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014d_TryStartRunForLyst16ItemsRank2_False()
+
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.ItemDoesNotSupportRanks)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRank:=2)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014e_TryStartRunForLyst16ItemsStart4_True_4_13()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(4, 13)
+    
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014f_TryStartRunForLyst16ItemsStartMinus4_True_13_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(13, 4)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -4)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014g_TryStartRunForLyst16ItemsStart20_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(-5, 13)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 20)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014h_TryStartRunForLyst16ItemStartMinus20_False()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = False
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexExceedsItemCount)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd("Hello World", -20)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014i_TryStartRunForLyst16IttemsStartIsZero_True_0_16()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    Dim myExpectedMessage As Variant
+    myExpectedMessage = enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+        
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 0)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgEnum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014j_TryStartRunForLyst16ItemsStart5Run5_True_4_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(5, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 5, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014k_TryStartRunForLyst16CharsStart5RunMinus5_True_0_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 5, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014l_TryStartRunForLyst16ItemsStartMinus6Run5_True_10_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(11, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+        
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, 5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014m_TryStartRunForLyst11CharsStartMinus6RunMinus5_True_6_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(7, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, -5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T014n_TryStartRunForLyst16ItemsStartMinus6RunMinus5EndMinus3_True_6_5_EndIgnored()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(7, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, -5, -3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T014o_TryStartRunForLyst16ItemsStart6End9_True_5_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(6, 4)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 6, ipEndIndex:=9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T014p_TryStartRunForLyst16ItemsStart6End3_True_2_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(3, 4)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, 6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014q_TryStartRunForLyst16ItemsStartMinus6End3_True_2_9()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(3, 9)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014r_TryStartRunForLyst16ItemsStartMinus6EndMinus3_True_10_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(11, 4)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=-3)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014s_TryStartRunForLyst16ItemsStartMinus6EndMinus9_True_7_4()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(8, 4)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, -6, ipeNDiNDEX:=-9)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014t_TryStartRunForLyst16ItemsEnd5_True_0_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipeNDiNDEX:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014u_TryStartRunForLyst16ItemsEndMinus5_True_0_12()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 12)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipeNDiNDEX:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+
+'@TestMethod("TryStartRun")
+Public Sub T014v_TryStartRunForLyst16ItemsRun5_True_0_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(1, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRun:=5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+'@TestMethod("TryStartRun")
+Public Sub T014w_TryStartRunForLyst11CharsRunMinus5_True_11_5()
+    
+    On Error GoTo TestFail
+
+    Dim myExpectedStatus As Boolean
+    myExpectedStatus = True
+    
+    ' Dim myExpectedMessage As Variant
+    ' myExpectedMessage = Enums.Message.AsEnum(Msg.StartIndexWasZeroResetToOne)
+    
+    Dim myExpectedItems As Variant
+    myExpectedItems = Array(12, 5)
+    
+    Dim myItem As Lyst
+    Set myItem = Types.Iterable.ToLyst(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    
+    Dim myResult As Result
+    
+    Set myResult = Ranges.TryStartRunFromAnyStartRunEnd(myItem, ipRun:=-5)
+    
+    Assert.Strict.AreEqual myExpectedStatus, myResult.Status, CurrentProcedureName
+    'Assert.Strict.AreEqual myExpectedMessage, myResult.MsgENum, CurrentProcedureName
+    Assert.Strict.SequenceEquals myExpectedItems, myResult.Items.ToArray, CurrentProcedureName
+    
+TestExit:
+    Exit Sub
+    
+TestFail:
+    Debug.Print CurrentProcedureName, " raised an error: #" & Err.Number & " - " & Err.Description
+    
+End Sub
+
+#End Region
+#End Region
+    
+End Module

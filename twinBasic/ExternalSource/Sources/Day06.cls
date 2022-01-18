@@ -34,7 +34,7 @@ Option Explicit
         Lyst _
           .Deb _
           .AddRange(VBA.Split(Filer.GetFileAsString(AoC2021Data & InputData), Char.twComma)) _
-          .MapIt(mpToLong.Deb)
+          .MapIt(mpToType.Deb(ToLong))
         
       End If
       
@@ -50,16 +50,14 @@ Option Explicit
   Public Sub Part01()
     
     Dim myResult As LongLong = Grow(80, s.Data)
-    Debug.Print myResult
-    'Fmt.Dbg "The answer to Day {0} part 1 is {1}.  Found is {2}", VBA.Mid$(InputData, 4, 2), "xxxxxx", myResult
+    Console.Log("The answer to Day {0} part 1 is {1}.  Found is {2}", VBA.Mid$(InputData, 4, 2), "353079", myResult)
         
   End Sub
   
   Public Sub Part02()
     
     Dim myResult As LongLong = Grow(256, s.Data)
-    Debug.Print myResult
-    'Fmt.Dbg "The answer to Day {0} part 2 is {1}.  Found is {2}", VBA.Mid$(InputData, 4, 2), "xxxxxx", myResult
+    Console.Log("The answer to Day {0} part 2 is {1}.  Found is {2}", VBA.Mid$(InputData, 4, 2), "1605400130036", myResult)
         
   End Sub
   
@@ -70,7 +68,7 @@ Option Explicit
     Dim myFishAge As Variant
     For Each myFishAge In ipFishes
       
-      myHist.item(myFishAge + 1) += 1
+      myHist.Item(myFishAge + 1) += 1
       
     Next
 

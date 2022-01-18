@@ -132,7 +132,6 @@ proc FindLastWinner()=
 proc Part01() =
     
     PlaySquidBingo()
-    #echo fmt"The answer to Day 04 part 1 is xxxxxxx .  Found is {s.Answer}."
     echo fmt"The answer to Day 04 part 1 is 45031. Found {s.Answer}" 
 
 

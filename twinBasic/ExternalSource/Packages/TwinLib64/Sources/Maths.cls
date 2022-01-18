@@ -1,0 +1,193 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "Maths"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+'@Folder("Helpers")
+Option Explicit
+'@PredeclaredId
+'@Exposed
+
+Public Function Pi() As Double
+    Pi = 4 * VBA.Atn(1)
+End Function
+
+Public Function Tau() As Double
+    Tau = 2 * Pi
+End Function
+
+Public Function RadiansToDegrees() As Double
+    RadiansToDegrees = 180 / Pi
+End Function
+
+Public Function ATan2(ByVal ipY As Double, ByVal ipX As Double) As Double
+        
+    Dim myTheta As Double
+
+    If (Abs(ipX) < 0.0000001) Then
+        
+        If (Abs(ipY) < 0.0000001) Then
+            
+            myTheta = 0#
+                
+        ElseIf (ipY > 0#) Then
+            
+            myTheta = 1.5707963267949
+        Else
+            
+            myTheta = -1.5707963267949
+                
+        End If
+            
+    Else
+        
+        myTheta = VBA.Atn(ipY / ipX)
+    
+        If (ipX < 0) Then
+            
+            If (ipY >= 0#) Then
+                
+                myTheta = 3.14159265358979 + myTheta
+                    
+            Else
+                
+                myTheta = myTheta - 3.14159265358979
+                    
+            End If
+                
+        End If
+            
+    End If
+        
+    ATan2 = myTheta
+        
+End Function
+
+Public Function Ceiling(ByVal ipX As Double, Optional ByVal Factor As Double = 1) As Double
+    ' X is the value you want to round
+    ' is the multiple to which you want to round
+    Ceiling = (Int(ipX / Factor) - (ipX / Factor - Int(ipX / Factor) > 0)) * Factor
+End Function
+
+Public Function Floor(ByVal ipX As Double, Optional ByVal Factor As Double = 1) As Double
+    ' X is the value you want to round
+    ' is the multiple to which you want to round
+    Floor = Int(ipX / Factor) * Factor
+End Function
+
+Public Function Factorial(ByVal ipNumber As Variant) As Variant
+
+    Dim myFact As Variant
+    myFact = CDec(ipNumber)
+    Dim myCounter As Variant
+    myCounter = CDec(ipNumber - 1)
+    Do
+        
+        myFact = myFact * myCounter
+        myCounter = myCounter - 1
+        
+    Loop Until myCounter = 1
+        
+    Factorial = myFact
+        
+End Function
+
+Public Function NextPrime(ByVal ipNumber As Long) As Long
+
+    Dim myNumber As Long
+    myNumber = ipNumber
+    Do
+        myNumber = myNumber + 1
+    Loop Until IsPrime(myNumber)
+        
+    NextPrime = myNumber
+        
+End Function
+
+Public Function IsPrime(ByVal ipNumber As LongLong) As Boolean
+        
+    If ipNumber = 1 Then
+        
+        IsPrime = False
+        Exit Function
+            
+    ElseIf ipNumber < 4 Then
+        
+        IsPrime = True
+        Exit Function
+            
+    ElseIf ipNumber Mod 2 = 0 Then
+        
+        IsPrime = False
+        Exit Function
+            
+    ElseIf ipNumber < 9 Then
+        
+        IsPrime = True                           'we have already excluded 4,6 and 8.
+        Exit Function
+            
+    ElseIf ipNumber Mod 3 = 0 Then
+        
+        IsPrime = False
+        Exit Function
+            
+    Else
+        
+        Dim myR As Double
+        myR = Floor(Sqr(ipNumber))               ' n rounded to the greatest integer r so that r*r<=n
+            
+        Dim myF As Double
+        myF = 5
+            
+        Do While myF <= myR
+            
+            If ipNumber Mod myF = 0 Then
+                
+                IsPrime = False                  'return false (and step out of the function)
+                Exit Function
+                    
+            End If
+                
+            If ipNumber Mod (myF + 2) = 0 Then
+                
+                IsPrime = False
+                Exit Function                    'return false (and step out of the function)
+                    
+            End If
+            
+            myF = myF + 6
+        Loop
+
+        IsPrime = True
+            
+    End If
+        
+End Function
+'@Description("Ln. Log to base e to provide a more distictive function than of VBA which used Log for log to base e")
+Public Function Ln(ByVal ipX As Double) As Double
+Attribute Ln.VB_Description = "Ln. Log to base e to provide a more distictive function than of VBA which used Log for log to base e"
+  Ln = VBA.Log(ipX)
+End Function
+
+'@Description("Log to base 10.  nb native VBA uses Log to give Log to base e.  See Maths.Ln")
+Public Function Log(ByVal ipX As Double) As Double
+Attribute Log.VB_Description = "Log to base 10.  nb native VBA uses Log to give Log to base e.  See Maths.Ln"
+    Log = Log(ipX) / Log(10#)
+End Function
+
+Public Function TriangularNumber(ByVal ipLast As LongLong, Optional ByVal ipfirst As LongLong = 1) As LongLong
+  TriangularNumber = ipLast * (ipfirst + ipLast) / 2
+End Function
+
+
+Public Function Max(ByVal ipItem1 As Variant, ByVal ipItem2 As Variant) As Variant
+    Max = IIf(ipItem1 > ipItem2, ipItem1, ipItem2)
+End Function
+
+Public Function Min(ByVal ipItem1 As Variant, ByVal ipItem2 As Variant) As Variant
+    Min = IIf(ipItem1 < ipItem2, ipItem1, ipItem2)
+End Function

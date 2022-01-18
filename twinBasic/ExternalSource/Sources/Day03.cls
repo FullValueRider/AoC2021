@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "DDay03"
+Attribute VB_Name = "Day03"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -49,7 +49,7 @@ Public Sub Part01()
 
     Dim myItem As Variant
     For Each myItem In s.Transposed
-        myOnes = myItem.ReduceIt(rdCountIt.Deb(cmpEQ.Deb("1")))
+        myOnes = myItem.CountIt(cmpEQ.Deb("1"))
         ' This part works when the bias is to '1' if '1' and '0' are equal
         'so we can't use >=, just >
         If myOnes > myItem.Count - myOnes Then
@@ -66,7 +66,7 @@ Public Sub Part01()
     Dim myResult As Long
     myResult = Strs.BinToLong(myGamma) * Strs.BinToLong(myEpsilon)
 
-    Fmt.Dbg "The answer to Day 03 part 1 is 845186.  Found is {0}", myResult
+    Console.Log "The answer to Day 03 part 1 is 845186.  Found is {0}", myResult
     
 End Sub
 
@@ -90,10 +90,10 @@ Public Sub Part02()
     Set s.Transposed = s.Data.Transpose()
 
      Dim myIndex As Variant
-     For myIndex = 0 To s.Transposed.LastIndex
+     For myIndex = 1 To s.Transposed.LastIndex
         
         Set myLastOxygen = myReadings.Last
-        myOnes = s.Transposed.Item(myIndex).ReduceIt(rdCountIt.Deb(cmpEQ.Deb("1")))
+        myOnes = s.Transposed.Item(myIndex).CountIt(cmpEQ.Deb("1"))
         
         If myOnes >= myReadings.Count - myOnes Then
             myBit = "1"
@@ -102,7 +102,7 @@ Public Sub Part02()
             
         End If
 
-        Set myReadings = myReadings.FilterIt(ftIfIt.Deb(cmpEQ.Deb(myBit, myIndex)))
+        Set myReadings = myReadings.FilterIt(cmpEQ.Deb(myBit, myIndex))
        
         If myReadings.Count = 1 Then
             
@@ -120,21 +120,21 @@ Public Sub Part02()
     Set s.Transposed = s.Data.Transpose
 
     
-    For myIndex = 0 To s.Transposed.LastIndex
+    For myIndex = 1 To s.Transposed.LastIndex
         Set myLastCO2 = myReadings.Last
-        myOnes = s.Transposed.Item(myIndex).ReduceIt(rdCountIt.Deb(cmpEQ.Deb("1")))
+        myOnes = s.Transposed.Item(myIndex).Countit(cmpEQ.Deb("1"))
         If myOnes >= myReadings.Count - myOnes Then
             
             myBit = "0"
             
         Else
-            
         
             myBit = "1"
             
+            
         End If
         
-        Set myReadings = myReadings.FilterIt(ftIfIt.Deb(cmpEQ.Deb(myBit, myIndex)))
+        Set myReadings = myReadings.FilterIt(cmpEQ.Deb(myBit, myIndex))
     
         If myReadings.Count = 1 Then
             Set myLastCO2 = myReadings.First
@@ -148,7 +148,6 @@ Public Sub Part02()
 
     Dim myResult As Long
     myResult = Strs.BinToLong(myLastOxygen.ToString(vbNullString)) * Strs.BinToLong(myLastCO2.ToString(vbNullString))
-    Fmt.Dbg "The answer to Day 03 Part 2 is 4636702. Found {0}", myResult
+    Console.Log "The answer to Day 03 Part 2 is 4636702. Found {0}", myResult
     
     End Sub
-

@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "DDay02"
+Attribute VB_Name = "Day02"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -73,7 +73,7 @@ Public Sub Part01()
     Dim myResult As Long
     myResult = myX * myY
 
-    Fmt.Dbg "The answer to Day 02 part 1 is 1507611.  Found is {0}", myResult
+    Console.Log "The answer to Day 02 part 1 is 1507611.  Found is {0}", myResult
     
 End Sub
 
@@ -120,6 +120,6 @@ Public Sub Part02()
     Dim myResult As Long
     myResult = myX * myY
      
-    Fmt.Dbg "The answer to Day 02 part 2 is 1880593125. Found Is {0}", myResult
+    Console.Log "The answer to Day 02 part 2 is 1880593125. Found Is {0}", myResult
     
 End Sub

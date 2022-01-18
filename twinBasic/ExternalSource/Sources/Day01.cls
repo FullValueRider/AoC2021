@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "DDay01"
+Attribute VB_Name = "Day01"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -36,21 +36,21 @@ Public Sub Part01()
     
     If s.Integers Is Nothing Then
        
-       Set s.Integers = Lyst.Deb.AddRange(Filer.GetFileAsArrayOfStrings(AoC2021Data & InputData, vbCrLf)).MapIt(mpToLong)
+       Set s.Integers = Lyst.Deb.AddRange(Filer.GetFileAsArrayOfStrings(AoC2021Data & InputData, vbCrLf)).MapIt(mpToType.Deb(ToLong))
         
        
     End If
     
     Dim myIndex As Long
     Dim myResult As Long
-    For myIndex = 1 To s.Integers.LastIndex
+    For myIndex = 2 To s.Integers.LastIndex
        
        
-       If s.Integers.Item(myIndex) > s.Integers.Item(myIndex - 1) Then myResult = myResult + 1
+       If s.Integers.Item(myIndex) > s.Integers.Item(myIndex - 1) Then myResult += 1
            
     Next
 
-    Fmt.Dbg "The answer to Day 01 part 1 is 1711 .  Found is {0}", myResult
+   Console.Log("The answer to Day 01 part 1 is 1711 .  Found is {0}", myResult)
     
 End Sub
 
@@ -59,7 +59,7 @@ Public Sub Part02()
 
     If s.Integers Is Nothing Then
        
-        Set s.Integers = Lyst.Deb.AddRange(Filer.GetFileAsArrayOfStrings(AoC2021Data & InputData, vbCrLf)).MapIt(mpToLong)
+        Set s.Integers = Lyst.Deb.AddRange(Filer.GetFileAsArrayOfStrings(AoC2021Data & InputData, vbCrLf)).MapIt(mpToType.Deb(ToLong))
          
         
      End If
@@ -69,7 +69,7 @@ Public Sub Part02()
      
      ' Compile a list of sums of 3 consecutive values
      Dim myIndex As Long
-     For myIndex = 2 To s.Integers.LastIndex
+     For myIndex = 3 To s.Integers.LastIndex
         
         mySums.Add s.Integers.Item(myIndex) + s.Integers.Item(myIndex - 1) + s.Integers.Item(myIndex - 2)
         
@@ -77,12 +77,12 @@ Public Sub Part02()
      
      ' Now repeat the compare that we did for part 1 using mysums
     Dim myResult As Long
-    For myIndex = 1 To mySums.LastIndex
+    For myIndex = 2 To mySums.LastIndex
     
-        If mySums.Item(myIndex) > mySums.Item(myIndex - 1) Then myResult = myResult + 1
+        If mySums.Item(myIndex) > mySums.Item(myIndex - 1) Then myResult += 1
         
     Next
 
-    Fmt.Dbg "The answer to Day 01 part 2 is 1743 .  Found is {0}", myResult
+    Console.Log "The answer to Day 01 part 2 is 1743 .  Found is {0}", myResult
     
 End Sub

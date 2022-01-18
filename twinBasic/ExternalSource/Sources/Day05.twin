@@ -1,0 +1,271 @@
+' Public Class VentMap
+'     Attribute VB_Creatable = True
+'     Attribute VB_PredeclaredId = True
+'     Attribute VB_Exposed = True
+'     Implements Kvp Via KvpFields
+' End Class
+
+' Public Class Ventlines
+'     Attribute VB_Creatable = True
+'     Attribute VB_PredeclaredId = True
+'     Attribute VB_Exposed = True
+'     Implements Lyst Via LystFields
+    
+   
+' End Class
+
+' Public Class VentLine
+'     Attribute VB_Creatable = True
+'     Attribute VB_PredeclaredId = True
+'     Attribute VB_Exposed = True
+'     Implements Lyst Via LystFields
+' End Class
+
+
+Class Day05
+    Attribute VB_Name = "Day05"
+    Attribute VB_GlobalNameSpace = False
+    Attribute VB_Creatable = False
+    Attribute VB_PredeclaredId = True
+    Attribute VB_Exposed = True
+    Option Explicit
+    '@PredeclaredId
+    '@Exposed
+    '@Folder("Comparers")
+
+    Const InputData           As String = "Day05.txt"
+
+    Public Enum VentLineType
+        
+        vlPoint = 2 ^ 0
+        vlHorizontal = 2 ^ 1
+        vlVertical = 2 ^ 2
+        vlDiagonal = 2 ^ 3
+            
+    End Enum
+    
+    
+    Private Type State
+        
+        VentLines                       As lyst ' a Lyst of VentLineObjects
+        
+        
+    End Type
+
+    Private s                           As State
+
+
+    Private Sub class_initialize()
+    End Sub
+    
+    Public Sub Initialise()
+
+        Set s.VentLines = _
+            Lyst _
+                .Deb _
+                .AddRange(VBA.Split(Filer.GetFileAsString(AoC2021Data & InputData), vbCrLf)) _
+                .MapIt(mpMultiReplace.Deb(Array(" ", vbNullString), Array("->", ","))) _
+                .MapIt(mpExecDeb.Deb(VentCoords))
+        
+    End Sub
+
+    
+    Public Sub Execute()
+        
+        Part01
+        Part02
+        
+    End Sub
+
+    
+    Public Sub Part01()
+    
+        Initialise
+        Dim myresult As Long
+        myresult = BuildVentMap(s.VentLines, Lyst.Deb.Add(vlPoint, vlHorizontal, vlVertical)).CountIt(cmpMT.Deb(1))
+        
+        Console.Log("The answer to Day 05 part 1 is 7085.  Found is {0}", myresult)
+    
+    End Sub
+
+    Public Sub Part02()
+        Initialise
+        Dim myresult As Long
+        myresult = BuildVentMap(s.VentLines, Lyst.Deb.Add(vlPoint, vlHorizontal, vlVertical, vlDiagonal)).CountIt(cmpMT.Deb(1))
+        
+        Console.Log("The answer to Day 05 part 2 is 20271.  Found is {0}", myresult)
+        
+    End Sub
+
+    Public Function BuildVentMap(ByRef ipVentLines As Lyst, ByVal ipAllowedLineTypes As Lyst) As Kvp
+        
+        Dim myVentMap As Kvp
+        Set myVentMap = Kvp.Deb
+        
+        Dim myVentLine As Variant
+        For Each myVentLine In ipVentLines
+            
+            If ipAllowedLineTypes.HoldsItem(myVentLine.getlinetype) Then
+                
+                AddVentMapLine myVentLine, myVentMap
+                
+            End If
+            
+        Next
+        
+        Return myVentMap
+        
+    End Function
+    
+    Public Sub AddVentMapLine(ByVal ipVentLine As VentCoords, ByRef iopVentMap As Kvp)
+        
+        Dim myCoords As Lyst
+        Set myCoords = ipVentLine.GetCoords
+        
+        Dim myCoord As Variant ' Is String
+        For Each myCoord In myCoords
+            
+            If iopVentMap.HoldsKey(myCoord) Then
+                
+                iopVentMap.Item(myCoord) += 1
+            
+            Else
+                
+                iopVentMap.Add myCoord, 1
+                
+            End If
+            
+        Next
+        
+    End Sub
+    
+End Class
+
+
+Public Class VentCoords
+    
+    Attribute VB_Name = "VentCoords"
+    Attribute VB_GlobalNameSpace = False
+    Attribute VB_Creatable = True
+    Attribute VB_PredeclaredId = True
+    Attribute VB_Exposed = True
+    Option Explicit
+    
+    Private Enum CoordType
+    
+        ctX1 = 0
+        ctY1
+        ctX2
+        ctY2
+        
+    End Enum
+    
+    Private Type State
+        
+        X1 As Long
+        Y1 As Long
+        X2 As Long
+        Y2 As Long
+        Type As VentLineType
+        
+    End Type
+    
+    Private s As state
+    
+    Public Sub New()
+    End Sub
+    
+    Public Function Deb(ByVal ipCoords As String) As VentCoords
+        
+        With New VentCoords
+        
+            Set Deb = .ReadyToUseInstance(ipCoords)
+            
+        End With
+        
+    End Function
+    
+    
+    Public Function ReadyToUseInstance(ByVal ipCoords As String) As VentCoords
+        
+        Dim mycoords As Variant = VBA.Split(ipCoords, Char.twComma)
+        
+        s.X1 = mycoords(ctX1)
+        s.Y1 = mycoords(ctY1)
+        s.X2 = mycoords(ctX2)
+        s.Y2 = mycoords(ctY2)
+            
+        'Determine any equivalence between X1,X2 and Y1,Y2 so that we
+        'can assign a type to the line
+        
+        Select Case True
+            
+            Case Is = ((s.X1 = s.X2) And (s.Y1 = s.Y2)):            s.Type = VentLineType.vlPoint
+            Case Is = (s.Y1 = s.Y2):                                s.Type = VentLineType.vlHorizontal
+            Case Is = (s.X1 = s.X2):                                s.Type = VentLineType.vlVertical
+            Case Else:                                              s.Type = VentLineType.vlDiagonal
+            
+        End Select
+        
+        Set ReadyToUseInstance = Me
+        
+    End Function
+    
+    
+    Public Function GetLineType() As VentLineType
+        GetLineType = s.Type
+    End Function
+    
+    
+    Public Function GetCoords() As Lyst
+        
+        Dim myVentLine As Lyst
+        Set myVentLine = Lyst.Deb
+        
+        Dim myXCoord As Long
+        Dim myYCoord As Long
+        Dim myYStep As Long = If(s.Y1 <= s.Y2, 1, -1)
+        Dim myXStep As Long = If(s.X1 <= s.X2, 1, -1)
+        
+        Select Case s.Type
+            
+            Case vlPoint
+            
+                myVentLine.Add Fmt.Txt("{0},{1}", s.X1, s.Y1)
+                
+                
+            Case vlHorizontal
+            
+                For myXCoord = s.X1 To s.X2 Step myXStep
+                    
+                    myVentLine.Add Fmt.Txt("{0},{1}", myXCoord, s.Y1)
+                    
+                Next
+            
+                
+            Case vlVertical
+            
+                For myYCoord = s.Y1 To s.Y2 Step myYStep
+                    
+                    myVentLine.Add Fmt.Txt("{0},{1}", s.X1, myYCoord)
+                    
+                Next
+            
+            
+            Case vlDiagonal
+            
+                myYCoord = s.Y1
+                For myXCoord = s.X1 To s.X2 Step myXStep
+                    
+                    myVentLine.Add Fmt.Txt("{0},{1}", myXCoord, myYCoord)
+                    myYCoord += myYStep
+                    
+                Next
+            
+        End Select
+        
+        Return myVentLine
+        
+    End Function
+    
+End Class

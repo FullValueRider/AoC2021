@@ -1,0 +1,15 @@
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\bin\Debug\net6.0\AoC2021.exe
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\bin\Debug\net6.0\AoC2021.deps.json
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\bin\Debug\net6.0\AoC2021.runtimeconfig.json
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\bin\Debug\net6.0\AoC2021.dll
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\bin\Debug\net6.0\ref\AoC2021.dll
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\bin\Debug\net6.0\AoC2021.pdb
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.csproj.AssemblyReference.cache
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.AssemblyInfoInputs.cache
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.AssemblyInfo.cs
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.csproj.CoreCompileInputs.cache
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.dll
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\ref\AoC2021.dll
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.pdb
+C:\Users\slayc\source\repos\AoC2021\Cshp\AoC2021\obj\Debug\net6.0\AoC2021.genruntimeconfig.cache

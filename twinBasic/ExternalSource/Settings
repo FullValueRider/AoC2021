@@ -1,1 +1,73 @@
-{"project.references":[{"id":"{00020430-0000-0000-C000-000000000046}","name":"OLE Automation","versionMajor":2,"versionMinor":0,"lcid":0,"path32":"C:\\Windows\\SysWOW64\\stdole2.tlb","path64":"C:\\Windows\\System32\\stdole2.tlb"},{"id":"{9847A10D-8987-44B2-8B87-EA77DEF7F1D9}","name":"[twinBASIC Extension] Unit Testing Assertion Library","lcid":0,"versionMajor":1,"versionMinor":0},{"id":"{420B2830-E718-11CF-893D-00A0C9054228}","name":"Microsoft Scripting Runtime","versionMajor":1,"versionMinor":0,"lcid":0,"path32":"C:\\Windows\\SysWOW64\\scrrun.dll","path64":"C:\\Windows\\System32\\scrrun.dll"},{"id":"{BED7F4EA-1A96-11D2-8F08-00A0C9A6186D}","name":"mscorlib.dll","versionMajor":2,"versionMinor":4,"lcid":0,"path32":"C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\mscorlib.tlb","path64":"C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\mscorlib.tlb"},{"id":"{15DFBBB0-C4A2-4CAB-89EA-95A31A01E3F5}","name":"TwinLib64","versionMajor":1,"versionMinor":0,"lcid":0,"path32":"c:\\Users\\slayc\\source\\repos\\twinBasic\\TwinLib64\\Build\\TwinLib64_win64.dll","path64":""}],"project.name":"NewProject","project.description":"New project","project.id":"{B768C096-6072-450A-84A8-01D07F690907}","configuration.inherits":"Defaults","project.buildType":"Standard EXE","project.buildPath":"${SourcePath}\\Build\\${ProjectName}_${Architecture}.${FileExtension}","project.optionExplicit":true,"project.warnings":{"ignored":[],"errors":[]},"project.autoPrettify":true,"project.isConsoleApplication":true,"project.codeLensRunProcedure":true,"project.largeAddressAware":true,"project.depAware":true}
+{
+	"project.references": [
+		{
+			"id": "{00020430-0000-0000-C000-000000000046}",
+			"name": "OLE Automation",
+			"versionMajor": 2,
+			"versionMinor": 0,
+			"lcid": 0,
+			"path32": "C:\\Windows\\SysWOW64\\stdole2.tlb",
+			"path64": "C:\\Windows\\System32\\stdole2.tlb"
+		},
+		{
+			"id": "{9847A10D-8987-44B2-8B87-EA77DEF7F1D9}",
+			"name": "[twinBASIC Extension] Unit Testing Assertion Library",
+			"lcid": 0,
+			"versionMajor": 1,
+			"versionMinor": 0
+		},
+		{
+			"id": "{420B2830-E718-11CF-893D-00A0C9054228}",
+			"name": "Microsoft Scripting Runtime",
+			"versionMajor": 1,
+			"versionMinor": 0,
+			"lcid": 0,
+			"path32": "C:\\Windows\\SysWOW64\\scrrun.dll",
+			"path64": "C:\\Windows\\System32\\scrrun.dll"
+		},
+		{
+			"id": "{BED7F4EA-1A96-11D2-8F08-00A0C9A6186D}",
+			"name": "mscorlib.dll",
+			"versionMajor": 2,
+			"versionMinor": 4,
+			"lcid": 0,
+			"path32": "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\mscorlib.tlb",
+			"path64": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\mscorlib.tlb"
+		},
+		{
+			"symbolId": "TwinLib64",
+			"name": "[IMPORTED] TwinLib64",
+			"id": "{B768C096-6072-450A-84A8-01D07F690907}",
+			"versionMajor": "0",
+			"versionMinor": "1",
+			"versionRevision": "2",
+			"versionBuild": "7",
+			"path32": "/Packages/TwinLib64",
+			"path64": "/Packages/TwinLib64",
+			"licence": "MIT",
+			"publisher": "FullValueRider",
+			"publishedDate": "18-JAN-2022",
+			"publishedTime": "11:57:33"
+		}
+	],
+	"project.name": "AoC2021",
+	"project.description": "AoC2021",
+	"project.id": "{B768C096-6072-450A-84A8-01D07F690907}",
+	"configuration.inherits": "Defaults",
+	"project.buildType": "Standard EXE",
+	"project.buildPath": "${SourcePath}\\Build\\${ProjectName}_${Architecture}.${FileExtension}",
+	"project.optionExplicit": true,
+	"project.warnings": {
+		"ignored": [],
+		"errors": []
+	},
+	"project.autoPrettify": true,
+	"project.isConsoleApplication": true,
+	"project.codeLensRunProcedure": true,
+	"project.largeAddressAware": true,
+	"project.depAware": true,
+	"project.versionMajor": 1,
+	"project.versionMinor": 0,
+	"project.versionRevision": 0,
+	"project.versionBuild": 0
+}

@@ -1,0 +1,309 @@
+Class Day04
+
+	Attribute VB_Creatable = True
+    Attribute VB_PredeclaredId = True
+    Attribute VB_Exposed = True
+	Public Const AoC2021Data As String = "C:\Users\slayc\source\repos\AoC2021\RawData\"
+    Private Const InputData     As String = "Day04.txt"
+
+    Private Type State
+        
+        Data                            As Lyst
+        DrawnNumbers                    As Lyst     ':seq[int]
+        Boards                          As Lyst     'seq[Board]
+        
+    End Type
+
+
+    Private s                           As State
+
+
+    Private Sub Class_Initialise()
+    End Sub
+    
+    Private Sub Initialise()
+        
+        If s.Data Is Nothing Then
+        
+            ' SPlit the raw data into two fields, list of drawn numbers, list of boards
+            Set s.Data = _
+                Lyst _  
+                    .Deb _
+                    .AddRange(VBA.Split(Filer.GetFileAsString(AoC2021Data & InputData), vbCrLf & vbCrLf, 2)) _
+                    .MapIt(mpMultiReplace.Deb(Array(Char.twSpace & Char.twSpace, Char.twSpace), Array(vbCrLf & Char.twSpace, vbCrLf)))
+            
+            ' Convert drawn numbers as a comma separated string to a Lyst of Long values
+            Set s.DrawnNumbers = _
+                Lyst _
+                    .Deb _
+                    .AddRange(VBA.Split(s.Data.First, Char.twComma)) _
+                    .MapIt(mpToType.Deb(ToLong))
+          
+            ' Create a lyst of Board objects from a string of all boards
+            Set s.Boards = _
+                Lyst.Deb _  
+                    .AddRange(VBA.Split(s.Data.Last, vbCrLf & vbCrLf)) _
+                    .MapIt(mpSplitToLyst.Deb(vbCrLf)) _
+                    .MapIt(mpInner.Deb(mpSplitToLyst.Deb(Char.twSpace))) _
+                    .MapIt(mpInner.Deb(mpToType.Deb(ToLong))) _
+                    .MapIt(mpExecDeb.Deb(Board))
+        
+        End If
+        
+    End Sub
+
+    Public Sub Execute()
+        
+        Part01
+        Part02
+        
+    End Sub
+
+    Public Sub Part01()
+        
+        Initialise
+        Dim myResult As Long
+        myResult = PlaySquidBingo
+        Fmt.Dbg "The answer to Day 04 part 1 is 45031.  Found is {0}", myResult
+        
+    End Sub
+
+    Public Sub Part02()
+        
+        Initialise
+        Dim myResult As Long
+        myResult = FIndLastWinner
+        Fmt.Dbg "The answer to Day 04 part 2 is 2568.  Found is {0}", myResult
+        
+    End Sub
+
+
+    Public Function PlaySquidBingo() As Long
+
+        Dim myNumber As Variant
+        For Each myNumber In s.DrawnNumbers
+
+            Dim myBoard As Variant
+            For Each myBoard In s.Boards
+                
+                If myBoard.HasNumber(myNumber) Then
+
+                    If myBoard.IsWinner Then
+                        
+                        PlaySquidBingo = myBoard.Winnervalue * myNumber
+                        Exit Function
+                    
+                    End If
+                    
+                End If
+                
+            Next
+            
+        Next
+                        
+        PlaySquidBingo = -1
+        
+    End Function
+    
+    Public Function FIndLastWinner() As Long
+    
+        Dim myBoardsInPlay As Kvp
+        Set myBoardsInPlay = Kvp.Deb.SetKeysToNumber(0&).Add(Ranges.GetSeries(0, s.Boards.Count)).Reverse
+        
+        Dim myNumber As Variant
+        For Each myNumber In s.DrawnNumbers
+            
+            Dim myBoard As Variant
+            For Each myBoard In s.Boards
+         
+                If myBoardsInPlay.HoldsKey(myBoard.index) Then
+                    
+                    If myBoard.hasnumber(myNumber) Then
+                        
+                        If myBoard.iswinner Then
+                            
+                            If myBoardsInPlay.Count = 1 Then
+                                
+                                FIndLastWinner = myBoard.winnervalue * myNumber
+                                Exit Function
+                                
+                            Else
+                                
+                                myBoardsInPlay.Remove(myBoard.index)
+                                
+                            End If
+                            
+                        End If
+                        
+                    End If
+                    
+                End If
+                
+            Next
+            
+        Next
+        
+    End Function
+
+End Class
+
+
+
+
+Class Board
+    Attribute VB_Name = "Board"
+    Attribute VB_GlobalNameSpace = False
+    Attribute VB_Creatable = True
+    Attribute VB_PredeclaredId = True
+    Attribute VB_Exposed = True
+    Option Explicit
+    
+    Public Index                                As long
+    
+    Private Type State
+        
+        Numbers As Kvp
+        HRanks As Lyst
+        VRanks As lyst
+        
+    End Type
+    
+    Private s                                   As State
+    
+    Public Sub New()
+    End Sub
+    
+    Public Function Deb(ByVal ipBoardNumbers As Lyst) As Board
+        
+        With New Board
+        
+            Set Deb = .ReadyToUseInstance(ipBoardNumbers)
+            
+        End With
+        
+    End Function
+
+    
+    Friend Function ReadyToUseInstance(ByRef ipBoardNumbers As Lyst) As Board
+        
+        Set s.Numbers = Kvp.Deb
+        Set s.HRanks = Lyst.Deb
+        Set s.VRanks = Lyst.Deb
+        
+        'Use the Index field in the predeclaredInstance as a counter
+        Index = Board.Index
+        Board.Index += 1
+        
+        'Make a list of the numbers on the board, there are no duplicated numbers
+        Dim myRowNumbers As Variant
+        For Each myRowNumbers In ipBoardNumbers
+            
+           
+           s.Numbers.Add myRowNumbers, Ranges.GetConstSeries(myRowNumbers.count, 0)
+            
+        Next
+        
+        'Make a list of the horizontal and vertical rank on the board
+        For Each myRowNumbers In ipBoardNumbers
+    
+            s.HRanks.Add Kvp.Deb.Add(myRowNumbers, Ranges.GetConstSeries(myRowNumbers.count, 0))
+            
+        Next
+        
+        Dim myTransposed As Lyst
+        Set myTransposed = ipBoardNumbers.Transpose
+        
+        For Each myRowNumbers In myTransposed
+           
+            s.VRanks.Add Kvp.Deb.Add(myRowNumbers, Ranges.GetConstSeries(myRowNumbers.Count, 0))
+            
+        Next
+        
+        Set ReadyToUseInstance = Me
+        
+    End Function
+    
+    
+    Public Function IsWinner() As Boolean
+        
+        Dim myHRank As Variant
+        For Each myHRank In s.HRanks
+            
+            If myHRank.countit(cmpMT.Deb(0)) = myHRank.count Then
+                
+                IsWinner = True
+                Exit Function
+                
+            End If
+            
+        Next
+        
+        Dim myVRank As Variant
+        For Each myVRank In s.VRanks
+            
+            If myVRank.countit(cmpMT.Deb(0)) = myVRank.count Then
+                
+               IsWinner = True
+               Exit Function
+                
+            End If
+            
+        Next
+        
+    End Function
+
+    Public Function HasNumber(ByVal ipNumber As Long) As Boolean
+        Dim myHit As Boolean = False
+        If s.Numbers.KeysRef.LacksItem(ipNumber) Then Return myHit
+            
+        
+        Dim myRank As Variant
+        For Each myRank In s.HRanks
+            
+            If myRank.keysref.holdsitem(ipNumber) Then
+                
+                myRank.item(ipNumber) = 1
+                myHit = True
+                
+            End If
+            
+        Next
+            
+        For Each myRank In s.VRanks
+            
+            If myRank.keysref.holdsitem(ipNumber) Then
+                
+                myRank.item(ipNumber) = 1
+                
+            End If
+                
+        Next
+        
+        Return myHit
+        
+    End Function
+    
+    Public Function WinnerValue() As Long
+        
+        Dim Answer As Long
+        Dim myHRank As Variant
+        For Each myHRank In s.HRanks
+            
+            Dim myKey As Variant
+            For Each myKey In myHRank
+                
+                If myHRank.item(myKey) = 0 Then
+                    
+                    Answer += myKey
+                    
+                End If
+                
+            Next
+            
+        Next
+        
+        WinnerValue = Answer
+        
+    End Function
+
+End Class

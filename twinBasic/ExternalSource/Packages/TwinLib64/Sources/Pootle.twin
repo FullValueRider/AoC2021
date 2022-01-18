@@ -1,0 +1,50 @@
+Module Pootle
+
+	' add your procedures here
+Public Sub TestKvpNewEnum()
+    
+    Dim myKvp As Kvp
+    Set myKvp = Kvp.Deb.Add(10, 20, 30, 40, 50)
+    Dim myItem As Variant
+    For Each myItem In myKvp
+       Debug.Print myItem
+    Next
+
+End Sub
+
+Public Sub testindexof()
+    
+    Dim myAL As Lyst
+    Set myAL = Lyst.Deb
+    myAL.Add 10
+    myAL.Add 20
+    myAL.Add 30
+    myAL.Add 40
+    Debug.Print myAL.IndexOf(30, 0)
+    
+End Sub
+
+Public Sub dodays()
+    
+    Day04.Execute
+End Sub
+
+Public Sub TestmpExecDeb()
+
+    Dim myLyst As Lyst
+    Set myLyst = _
+        Lyst.Deb.Add _
+            ( _
+                Lyst.Deb.Add(10, 20, 30, 40, 50), _
+                Lyst.Deb.Add(11, 21, 31, 41, 51), _
+                Lyst.Deb.Add(12, 22, 32, 42, 52), _
+                Lyst.Deb.Add(13, 23, 33, 43, 53), _
+                Lyst.Deb.Add(14, 24, 34, 44, 54) _
+            )
+    
+    Dim myBoard As Board
+    Set myBoard = mpExecDeb.Deb(Board).ExecMapper(myLyst)
+    
+End Sub
+
+End Module

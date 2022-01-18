@@ -5,16 +5,16 @@
                 "uri": "twinbasic-builds:/___BUILDS/"
             },
             {
-                "name": "PROJECT: NewProject",
-                "uri": "twinbasic:/NewProject/"
+                "name": "PROJECT: AoC2021",
+                "uri": "twinbasic:/AoC2021/"
             }
         ] , 
 		"settings": {
-			"window.title": "${dirty}NewProject${separator}twinBASIC",
+			"window.title": "${dirty}AoC2021${separator}twinBASIC",
 				"files.associations" : {
                     "/___BUILDS/*": "twinbasicBuildConfig",
-                    "/*/*": "twinbasicProjectConfig",
-                    "/___BUILDS/win64": "twinbasicBuildConfigACTIVE"
+                    "/___BUILDS/win64": "twinbasicBuildConfigACTIVE",
+                    "/*/Settings": "twinbasicProjectConfig"
                 }, 
 				"files.defaultLanguage" : "twinbasic",
 					"editor.trimAutoWhitespace" : false,
@@ -39,7 +39,8 @@
                             {
                                 "configuration.name": "win64",
                                 "configuration.inherits": "Defaults",
-                                "compiler.target": "win64"
+                                "compiler.target": "win64",
+                                "compiler.autoRestart": true
                             }
                         ]
                     }, 

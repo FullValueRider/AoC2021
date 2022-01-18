@@ -26,17 +26,18 @@ Option Explicit
   
   
   Private Sub class_initialize()
-      
-    Debug.Print "Starting"
-    If s.Data Is Nothing Then
+  End Sub
+  
+  Private Sub Initialise()
+    
         
       Set s.Data = _
         Lyst _
           .Deb _
           .AddRange(VBA.Split(Filer.GetFileAsString(AoC2021Data & InputData), Char.twComma)) _
-          .MapIt(mpToLong.Deb)
+          .MapIt(mpToType.Deb(ToLong))
         
-      End If
+     
       
   End Sub
  _
@@ -49,14 +50,15 @@ Option Explicit
   
   Public Sub Part01()
     
-    Dim myAverage As Long = VBA.Round(s.Data.ReduceIt(rdSum.Deb) / s.Data.Count, 0)
+    Initialise
+    Dim myAverageHorizontalPosition As Long = VBA.Round(s.Data.ReduceIt(rdSum.Deb) / s.Data.Count, 0)
    
-    Dim myAlignAt As Long
-    Dim mycost As Long = Sys.MaxLong
-    For myAlignAt = myAverage To 0 Step -1
+    Dim myHorizontalPosition As Long
+    Dim mycost As Long = TwinLib64.Preset.MaxLong
+    For myHorizontalPosition = myAverageHorizontalPosition To 0 Step -1
     
-      Dim myDist As Lyst = s.Data.Clone.MapIt(mpDec.Deb(myAlignAt))
-      Dim mySumDist As Long = myDist.MapIt(mpMath.Deb(Abs)).ReduceIt(rdSum.Deb)
+      Dim myDist As Lyst = s.Data.Clone.MapIt(mpDec.Deb(myHorizontalPosition))
+      Dim mySumDist As Long = myDist.MapIt(mpMath.Deb(Fx.vbAbs)).ReduceIt(rdSum.Deb)
       If mycost < mySumDist Then Exit For
       mycost = mySumDist
       
@@ -68,21 +70,29 @@ Option Explicit
   
   Public Sub Part02()
     
-    Dim myAverage As Long = VBA.Round(s.Data.ReduceIt(rdSum.Deb) / s.Data.Count, 0)
+    Initialise
+    Dim myAverageHorizontalPosition As Long = VBA.Round(s.Data.ReduceIt(rdSum) / s.Data.Count, 0)
    
-    Dim myAlignAt As Long
-    Dim mycost As Long = Sys.MaxLong
-    For myAlignAt = myAverage To 0 Step -1
+    Dim myTestHorizontalPosition As Long
+    Dim mySumOfAbsoluteDeviationsFromTestPosition As Long = Preset.MaxLong
+    For myTestHorizontalPosition = myAverageHorizontalPosition To 0 Step -1
       
-      Dim myDist As Lyst
-      Set myDist = s.Data.Clone.MapIt(mpDec.Deb(myAlignAt))
-      Dim mySumDist As Long = myDist.MapIt(mpMath.Deb(Abs)).MapIt(mpMath.Deb(SumOfInt, 1)).ReduceIt(rdSum.Deb(cmpMTEQ.Deb(0)))
-      If mycost < mySumDist Then Exit For
-      mycost = mySumDist
+   
+        Dim myTestSumOfAbsoluteDeviationsFromTestPosition As Long
+        myTestSumOfAbsoluteDeviationsFromTestPosition = _
+            s.Data _
+                .Clone _
+                .MapIt(mpDec.Deb(myTestHorizontalPosition)) _
+                .MapIt(mpMath.Deb(Fx.vbAbs)) _
+                .MapIt(mpMath.Deb(Fx.TriangularNumber)) _
+                .ReduceIt(rdSum.Deb)
+     
+        If mySumOfAbsoluteDeviationsFromTestPosition < myTestSumOfAbsoluteDeviationsFromTestPosition Then Exit For
+        mySumOfAbsoluteDeviationsFromTestPosition = myTestSumOfAbsoluteDeviationsFromTestPosition
       
     Next
     
-    Fmt.Dbg "The answer to Day {0} part 2 is {1}.  Found is {2}", VBA.Mid$(InputData, 4, 2), "98925151", mycost
+    Fmt.Dbg "The answer to Day {0} part 2 is {1}.  Found is {2}", VBA.Mid$(InputData, 4, 2), "98925151", mySumOfAbsoluteDeviationsFromTestPosition
         
   End Sub
   
